@@ -54,5 +54,5 @@ Per studiare gli algoritmi per trovare le componenti connesse si scrivano i segu
     * Struttura dati coda con priorità (con min-hash) 
  * Un programma che permetta di condurre esperimenti su graﬁ casuali con dimensione crescente e con probabilità di presenza di archi crescente. 
 
-Scrivere inoltre una relazione che descriva quanto fatto
+Scrivere inoltre una relazione che descriva quanto fatto.
 
