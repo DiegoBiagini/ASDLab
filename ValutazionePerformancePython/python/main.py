@@ -5,12 +5,13 @@ from timeit import default_timer as timer
 
 def main():
     # Maximum allowed time for an execution : 3 minutes
-    max_time = 60 * 1000 * 3
+    print(get_quick_best_case(7))
+
 
 
 # Function that dictates the growth of the array size
 def next_size(current_size):
-    return current_size * 10
+    return current_size * 2
 
 
 # Standard test function, takes the max time the test is allowed to run, the sorting algorithm that will be used and
