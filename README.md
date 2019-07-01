@@ -49,9 +49,9 @@ Per studiare gli algoritmi per trovare le componenti connesse si scrivano i segu
  * Generazione di graﬁ pesati casuali
  * Ricerca delle componenti connesse 
  * Algoritmo di Kruscal 
-  - Struttura dati UNION-FIND
+    * Struttura dati UNION-FIND
  * In altrenativa algoritmo di Prim 
-  - Struttura dati coda con priorità (con min-hash) 
+    * Struttura dati coda con priorità (con min-hash) 
  * Un programma che permetta di condurre esperimenti su graﬁ casuali con dimensione crescente e con probabilità di presenza di archi crescente. 
 
 Scrivere inoltre una relazione che descriva quanto fatto
