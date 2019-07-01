@@ -5,7 +5,7 @@ The three exercises I decided to develop are the following.
 Ex1 : 
 =====
 
-Valutazione performance Python  
+**Valutazione performance Python**    
 Questo deve essere consegnato per l’esame e deve essere discusso con il docente (al ricevimento) secondo le tempistiche indicate sul sito di e-learning  
 
 Scrivere uno o più programmi Python che permettono di: 
