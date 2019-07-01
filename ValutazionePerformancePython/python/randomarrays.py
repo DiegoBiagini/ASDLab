@@ -3,24 +3,24 @@ import random
 
 
 # Creates an array of the given size and fills it with pseudo random values between a min and max value(both included)
-def random_array(size, min_value, max_value):
+def get_random_array(size, min_value, max_value):
     return [random.randint(min_value, max_value) for _ in range(size)]
 
 
 # Creates an array of the given size and fills it with values between 0 and size-1 in ascending order
-def random_asc_order(size):
+def get_random_asc(size):
     return [i for i in range(0, size)]
 
 
 # Creates an array of the given size and fills it with values between 0 and size-1 in descending order
-def random_desc_order(size):
+def get_random_desc(size):
     return [size - i - 1 for i in range(0, size)]
 
 
 # Creates an array of the given size and fills it with random values between 0 and size-1 with a single
 # occurrence per value
-def random_single_occurrence(size):
-    random_asc = random_asc_order(size)
+def get_random_nodup(size):
+    random_asc = get_random_asc(size)
 
     # Randomize in place
     for i in range(0, size):
