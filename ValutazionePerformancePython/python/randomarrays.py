@@ -1,6 +1,5 @@
 # This file contains functions that generate random arrays with certain properties
 import random
-from binarytree import *
 
 
 # Creates an array of the given size and fills it with pseudo random values between a min and max value(both included)
@@ -31,17 +30,27 @@ def get_random_nodup(size):
     return random_asc
 
 
+# Generates the best case scenario for quicksort
 def get_quick_best_case(size):
-    # Preallocate
-    tree = ABR()
-    quick_best_case_aux(tree, 0, size - 1)
-    return tree.post_order_visit()
+    array = get_random_asc(size)
+    quick_best_case_aux(array, 0, size - 1, -1)
+    return array
 
 
-def quick_best_case_aux(tree, start, end):
-    if start <= end:
-        middle = (start + end) // 2
-        tree.insert(middle)
+def quick_best_case_aux(array, start, end, last_middle):
+    # Only 2 elements, leave them be
+    if end - start < 2:
+        return
 
-        quick_best_case_aux(tree, start, middle - 1)
-        quick_best_case_aux(tree, middle + 1, end)
+    middle = (start + end) // 2
+    # Call is a left branch in the recursion tree or first call
+    if last_middle == -1:
+        array[end], array[middle] = array[middle], array[end]
+    # Call is a right branch in the recursion tree
+    else:
+        array[last_middle], array[middle] = array[middle], array[last_middle]
+
+    quick_best_case_aux(array, start, middle - 1, -1)
+
+    quick_best_case_aux(array, middle + 1, end, middle)
+
