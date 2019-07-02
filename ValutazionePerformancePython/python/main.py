@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 def main():
     # Maximum allowed time for an execution : 3 minutes
-    max_time = 5
+    max_time = 180
     results = []
 
     # Insertion sort
@@ -34,7 +34,7 @@ def main():
     test_sorting(max_time, insertion_sort, get_random_desc, results)
     print("Quicksort su array crescente(worst case):\n", results)
     plot_and_save("Quick sort worst case", results)
-    
+
     # Both
     test_both(max_time, results)
     print("Insertion sort e quicksort su stesso array:\n", results)
