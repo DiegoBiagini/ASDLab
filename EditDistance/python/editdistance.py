@@ -80,8 +80,6 @@ def edit_distance_matrix(x, y):
 # Only returns the edit distance
 def edit_distance(x, y):
     c, op = edit_distance_matrix(x, y)
-    print(op)
-    op_sequence(op, len(x), len(y))
     return c[len(x), len(y)]
 
 
@@ -104,3 +102,20 @@ def op_sequence(op, i, j):
 
     op_sequence(op, nexti, nextj)
     print(Op(op[i, j]).name)
+
+
+# Finds the closest word using simple edit distance
+# Takes the word to examine and a list of words(dictionary)
+# Returns the closest word and its distance from the query
+def closest_word(word, dictionary):
+    mindistance = np.Inf
+    closest = ""
+
+    for entry in dictionary:
+        distance = edit_distance(word, entry)
+        if distance < mindistance:
+            mindistance = distance
+            closest = entry
+
+    return closest, mindistance
+
