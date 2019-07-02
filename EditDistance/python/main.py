@@ -1,3 +1,3 @@
-from editdistance import *
+from ngram import *
 
-print(edit_distance("ciao", "caio"))
+print(dictionary_ngram("../dict_nomi_95000.txt", 3))
