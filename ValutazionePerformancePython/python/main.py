@@ -1,6 +1,8 @@
 from randomarrays import *
 from sorting import *
 from timeit import default_timer as timer
+import matplotlib.pyplot as plt
+
 
 def main():
     # Maximum allowed time for an execution : 3 minutes
@@ -10,26 +12,33 @@ def main():
     # Insertion sort
     test_sorting(max_time, insertion_sort, get_random_nodup, results)
     print("Insertion sort su array casuale:\n", results)
+    plot_and_save("Insertion sort casuale", results)
 
     test_sorting(max_time, insertion_sort, get_random_asc, results)
     print("Insertion sort su array crescente(best case):\n", results)
+    plot_and_save("Insertion sort best case", results)
 
     test_sorting(max_time, insertion_sort, get_random_desc, results)
     print("Insertion sort su array decrescente(worst case):\n", results)
+    plot_and_save("Insertion sort worst case", results)
 
     # Quick sort
     test_sorting(max_time, quick_sort, get_random_nodup, results)
     print("Quicksort su array casuale:\n", results)
+    plot_and_save("Quick sort casuale", results)
 
     test_sorting(max_time, quick_sort, get_quick_best_case, results)
     print("Quicksort su array apposito(best case):\n", results)
+    plot_and_save("Quick sort best case", results)
 
     test_sorting(max_time, insertion_sort, get_random_desc, results)
     print("Quicksort su array crescente(worst case):\n", results)
+    plot_and_save("Quick sort worst case", results)
     
     # Both
     test_both(max_time, results)
     print("Insertion sort e quicksort su stesso array:\n", results)
+    plot_and_save_both("Insertion sort e Quicksort casuale",results)
 
 
 # Function that dictates the growth of the array size
@@ -90,6 +99,33 @@ def test_both(max_time, results):
     except RecursionError:
         pass
     return results
+
+
+def plot_and_save(title, results):
+    plt.clf()
+
+    plt.plot([rec[0] for rec in results], [rec[1] for rec in results])
+    plt.suptitle(title)
+    plt.xlabel("Size")
+    plt.ylabel("Time(s)")
+
+    title = ''.join(x for x in title.title() if not x.isspace())
+    plt.savefig("../plots/" + title + ".png")
+
+
+def plot_and_save_both(title, results):
+    plt.clf()
+
+    plt.plot([rec[0] for rec in results], [rec[1] for rec in results], label="InsertionSort")
+    plt.plot([rec[0] for rec in results], [rec[2] for rec in results], label="QuickSort")
+
+    plt.suptitle(title)
+    plt.xlabel("Size")
+    plt.ylabel("Time(s)")
+    plt.legend()
+
+    title = ''.join(x for x in title.title() if not x.isspace())
+    plt.savefig("../plots/" + title + ".png")
 
 
 if __name__ == '__main__':
