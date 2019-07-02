@@ -29,7 +29,8 @@ N2
 
 **Edit distance**
 
-Vogliamo studiare l’algoritmo di Edit Distance e come si possa utilizzare per trovare parole vicine ad una query Q in un lessico L E’ possibile scaricare lessici di parole dal Web (esempio: https://github.com/napolux/paroleitaliane).   
+Vogliamo studiare l’algoritmo di Edit Distance e come si possa utilizzare per trovare parole vicine ad una query Q in un lessico L  
+E’ possibile scaricare lessici di parole dal Web (esempio: https://github.com/napolux/paroleitaliane).   
 
 Per fare questo dovremo scrivere programmi Python che:
  * Implementano l’edit distance
