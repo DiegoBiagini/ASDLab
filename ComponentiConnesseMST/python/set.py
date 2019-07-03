@@ -59,3 +59,15 @@ def union(set1, set2):
 
     return bigger_set
 
+
+# Returns a list containing the values in the set
+def set_to_list(set):
+    element = set.representative
+    list = []
+    if element is not None:
+        list.append(element.value)
+        while element.next is not None :
+            element = element.next
+            list.append(element.value)
+
+    return list

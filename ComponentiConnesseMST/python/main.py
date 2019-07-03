@@ -1,12 +1,10 @@
 from graphs import *
 
 def main():
-    graph = create_graph(4, 0.5)
+    graph = create_weighted_graph(5, 0.8, 1, 10)
     print(graph)
-    graph = create_weighted_graph(5, 0.3, 1, 10)
-    print(graph)
-    for i in range(0, 5):
-        print(adjacent_nodes(graph, i))
+    print(connected_components(graph))
+    print(kruskal_algorithm(graph))
 
 
 
