@@ -1,20 +1,13 @@
-from set import *
-
+from graphs import *
 
 def main():
-    set1 = make_set(1)
-    set2 = make_set(2)
-    set3 = make_set(3)
-    print(find_set(set1))
-    print(find_set(set2))
-    print(find_set(set3))
+    graph = create_graph(4, 0.5)
+    print(graph)
+    graph = create_weighted_graph(5, 0.3, 1, 10)
+    print(graph)
+    for i in range(0, 5):
+        print(adjacent_nodes(graph, i))
 
-    union(set1, set2)
-    union(set1, set2)
-    print(find_set(set1))
-    print(find_set(set2))
-    union(set1, set3)
-    print(find_set(set3))
 
 
 if __name__ == '__main__':
