@@ -1,7 +1,9 @@
+from timeit import default_timer as timer
+
+import matplotlib.pyplot as plt
+
 from randomarrays import *
 from sorting import *
-from timeit import default_timer as timer
-import matplotlib.pyplot as plt
 
 
 def main():
@@ -10,14 +12,16 @@ def main():
     results = []
 
     # Insertion sort
+    '''
     test_sorting(max_time, insertion_sort, get_random_nodup, results)
     print("Insertion sort su array casuale:\n", results)
     plot_and_save("Insertion sort casuale", results)
 
+
     test_sorting(max_time, insertion_sort, get_random_asc, results)
     print("Insertion sort su array crescente(best case):\n", results)
     plot_and_save("Insertion sort best case", results)
-
+    '''
     test_sorting(max_time, insertion_sort, get_random_desc, results)
     print("Insertion sort su array decrescente(worst case):\n", results)
     plot_and_save("Insertion sort worst case", results)
