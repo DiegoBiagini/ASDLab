@@ -1,17 +1,5 @@
-import io
 import random
 import string
-
-
-# Returns a list of all lines in a file
-def get_all_lines(filename):
-    file = io.open(filename, "r", encoding="utf8")
-    lines = []
-    for line in file:
-        lines.append(line[:-1])
-
-    file.close()
-    return lines
 
 
 # Returns the Jaccard value between 2 sets(lists)
@@ -36,3 +24,35 @@ def mistype_word(word, n):
         list_string[letter] = random.choice(string.ascii_lowercase)
 
     return "".join(list_string)
+
+
+# Calls mistype_word on every word in the passed list changing a random number of letters(between 1 and len/2 - 1)
+# Returns a list of tuples, each tuple contains the correct word and the mistyped word
+def mistype_list(words):
+    out_list = []
+    for word in words:
+
+        if len(word) == 1:
+            n_change = 1
+        else:
+            n_change = random.randint(1, len(word)//2)
+
+        out_list.append((word, mistype_word(word, n_change)))
+
+    return out_list
+
+
+# Saves the list to a file
+def list_to_file(list, filename):
+    with open(filename, "w", encoding="utf8") as f:
+        for item in list:
+            print(item, file=f)
+
+
+# Returns a list of all lines in a file
+def file_to_list(filename):
+    with open(filename, "r", encoding="utf8") as file:
+        out_list = file.readlines()
+
+    # Remove \n
+    return [x.strip() for x in out_list]

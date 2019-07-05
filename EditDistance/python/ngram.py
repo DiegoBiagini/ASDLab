@@ -23,14 +23,13 @@ def dictionary_ngram(dictionary, n):
 
 # Finds the closest word in the dictionary using intersection of n-grams, executes edit distance only if the Jaccard
 # coefficient is over a certain threshold
-def closest_word_ngram_ed_jacc(word, dictionary, n, jaccard):
-    all_ngrams = dictionary_ngram(dictionary, n)
+def closest_word_ngram_ed_jacc(word, n, n_grammed_dictionary, jaccard):
     word_ngram = get_ngram(word, n)
 
     mindistance = np.inf
     closest = ""
     # Check all words
-    for entry in all_ngrams:
+    for entry in n_grammed_dictionary:
         # If jaccard values is over threshold calculate edit distance
         if get_jaccard_value(word_ngram, entry[1]) > jaccard:
             distance = edit_distance(word, entry[0])
@@ -44,14 +43,13 @@ def closest_word_ngram_ed_jacc(word, dictionary, n, jaccard):
 
 # Finds the closest word in the dictionary using intersection of n-grams, executes edit distance only there is at least
 # a common n-gram
-def closest_word_ngram_ed_1gram(word, dictionary, n):
-    all_ngrams = dictionary_ngram(dictionary, n)
+def closest_word_ngram_ed_1gram(word, n, n_grammed_dictionary):
     word_ngram = get_ngram(word, n)
 
     mindistance = np.inf
     closest = ""
     # Check all words
-    for entry in all_ngrams:
+    for entry in n_grammed_dictionary:
         # If intersection size is at least one
         if len([value for value in word_ngram if value in entry[1]]):
             distance = edit_distance(word, entry[0])
