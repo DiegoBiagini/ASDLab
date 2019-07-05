@@ -61,22 +61,3 @@ def closest_word_ngram_ed_1gram(word, dictionary, n):
                 mindistance = distance
 
     return closest, mindistance
-
-
-# Finds the closest word in the dictionary using only intersection of ngrams, finds the word with the biggest Jaccard
-# coefficient
-def closest_word_ngram_int(word, dictionary, n):
-    all_ngrams = dictionary_ngram(dictionary, n)
-    word_ngram = get_ngram(word, n)
-
-    minjacc = -1
-    closest = ""
-    # Check all words
-    for entry in all_ngrams:
-        jaccard = get_jaccard_value(word_ngram, entry[1])
-        if jaccard > minjacc:
-            minjacc = jaccard
-            closest = entry[0]
-
-    return closest, minjacc
-

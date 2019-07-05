@@ -8,40 +8,39 @@ from sorting import *
 
 def main():
     # Maximum allowed time for an execution : 3 minutes
-    max_time = 180
+    max_time = 120
     results = []
 
     # Insertion sort
-    '''
-    test_sorting(max_time, insertion_sort, get_random_nodup, results)
+
+    test_sorting(max_time, insertion_sort, get_random_nodup, results, True, "insertion_rand")
     print("Insertion sort su array casuale:\n", results)
     plot_and_save("Insertion sort casuale", results)
 
-
-    test_sorting(max_time, insertion_sort, get_random_asc, results)
+    test_sorting(max_time, insertion_sort, get_random_asc, results, True, "insertion_best")
     print("Insertion sort su array crescente(best case):\n", results)
     plot_and_save("Insertion sort best case", results)
-    '''
-    test_sorting(max_time, insertion_sort, get_random_desc, results)
+
+    test_sorting(max_time, insertion_sort, get_random_desc, results, True, "insertion_worst")
     print("Insertion sort su array decrescente(worst case):\n", results)
     plot_and_save("Insertion sort worst case", results)
 
     # Quick sort
-    test_sorting(max_time, quick_sort, get_random_nodup, results)
+    test_sorting(max_time, quick_sort, get_random_nodup, results, True, "quick_rand")
     print("Quicksort su array casuale:\n", results)
     plot_and_save("Quick sort casuale", results)
 
-    test_sorting(max_time, quick_sort, get_quick_best_case, results)
+    test_sorting(max_time, quick_sort, get_quick_best_case, results, True, "quick_best")
     print("Quicksort su array apposito(best case):\n", results)
     plot_and_save("Quick sort best case", results)
 
-    test_sorting(max_time, insertion_sort, get_random_desc, results)
+    test_sorting(max_time, insertion_sort, get_random_desc, results, True, "quick_worst")
     print("Quicksort su array crescente(worst case):\n", results)
     plot_and_save("Quick sort worst case", results)
 
     # Both
     test_both(max_time, results)
-    print("Insertion sort e quicksort su stesso array:\n", results)
+    print("Insertion sort e quicksort su stesso array:\n", results, True)
     plot_and_save_both("Insertion sort e Quicksort casuale",results)
 
 
@@ -53,7 +52,8 @@ def next_size(current_size):
 # Standard test function, takes the max time the test is allowed to run, the sorting algorithm that will be used and
 # the function that will generate the array of values
 # puts into the list passed as a parameters the tuples: (size, time)
-def test_sorting(max_time, sorting_f, random_array_f, results):
+# If save_to_file is true saves the various array to file
+def test_sorting(max_time, sorting_f, random_array_f, results, save_to_file, filename):
     results.clear()
     current_size = 1
     sorting_time = 0
@@ -64,6 +64,8 @@ def test_sorting(max_time, sorting_f, random_array_f, results):
             # Create next array
             current_size = next_size(current_size)
             rand_array = random_array_f(current_size)
+            if save_to_file:
+                list_to_file(results, filename + "_" + str(current_size) + "_in.txt")
 
             sorting_time = timer()
             sorting_f(rand_array)
@@ -72,12 +74,14 @@ def test_sorting(max_time, sorting_f, random_array_f, results):
             results.append((current_size, sorting_time))
     except RecursionError:
         pass
+    if save_to_file:
+        list_to_file(results, filename + "_out.txt")
     return results
 
 
 # Tests both insertion and quick on the same random arrays
 # puts into the list passed as a parameters the tuples: (size, time_insertion, time_quicksort)
-def test_both(max_time, results):
+def test_both(max_time, results, save_to_file):
     results.clear()
     current_size = 1
     bigger_time = 0
@@ -88,6 +92,8 @@ def test_both(max_time, results):
             # Create next array
             current_size = next_size(current_size)
             rand_array = get_random_nodup(current_size)
+            if save_to_file:
+                list_to_file(results, "both_sort_" + str(current_size) + "_in.txt")
 
             insertion_time = timer()
             insertion_sort(rand_array.copy())
@@ -102,6 +108,8 @@ def test_both(max_time, results):
             results.append((current_size, insertion_time, quick_time))
     except RecursionError:
         pass
+    if save_to_file:
+        list_to_file(results, "both_sort_out.txt")
     return results
 
 
@@ -130,6 +138,21 @@ def plot_and_save_both(title, results):
 
     title = ''.join(x for x in title.title() if not x.isspace())
     plt.savefig("../plots/" + title + ".png")
+
+
+# Saves the list to a file
+def list_to_file(list, filename):
+    with open(filename, "w") as file:
+        file.writelines(["%s\n" % item for item in list])
+
+
+# Reads list from file
+def file_to_list(filename):
+    with open(filename) as file:
+        out_list = file.readlines()
+
+    # Remove \n
+    return [x.strip() for x in out_list]
 
 
 if __name__ == '__main__':
