@@ -13,28 +13,28 @@ def main():
 
     # Insertion sort
 
-    test_sorting(max_time, insertion_sort, get_random_nodup, results, True, "insertion_rand")
+    test_sorting(max_time, insertion_sort, get_random_nodup, results, True, "data/insertion_rand")
     print("Insertion sort su array casuale:\n", results)
     plot_and_save("Insertion sort casuale", results)
 
-    test_sorting(max_time, insertion_sort, get_random_asc, results, True, "insertion_best")
+    test_sorting(max_time, insertion_sort, get_random_asc, results, True, "data/insertion_best")
     print("Insertion sort su array crescente(best case):\n", results)
     plot_and_save("Insertion sort best case", results)
 
-    test_sorting(max_time, insertion_sort, get_random_desc, results, True, "insertion_worst")
+    test_sorting(max_time, insertion_sort, get_random_desc, results, True, "data/insertion_worst")
     print("Insertion sort su array decrescente(worst case):\n", results)
     plot_and_save("Insertion sort worst case", results)
 
     # Quick sort
-    test_sorting(max_time, quick_sort, get_random_nodup, results, True, "quick_rand")
+    test_sorting(max_time, quick_sort, get_random_nodup, results, True, "data/quick_rand")
     print("Quicksort su array casuale:\n", results)
     plot_and_save("Quick sort casuale", results)
 
-    test_sorting(max_time, quick_sort, get_quick_best_case, results, True, "quick_best")
+    test_sorting(max_time, quick_sort, get_quick_best_case, results, True, "data/quick_best")
     print("Quicksort su array apposito(best case):\n", results)
     plot_and_save("Quick sort best case", results)
 
-    test_sorting(max_time, insertion_sort, get_random_desc, results, True, "quick_worst")
+    test_sorting(max_time, insertion_sort, get_random_desc, results, True, "data/quick_worst")
     print("Quicksort su array crescente(worst case):\n", results)
     plot_and_save("Quick sort worst case", results)
 

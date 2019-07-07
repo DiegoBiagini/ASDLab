@@ -17,7 +17,7 @@ def main():
     random_words = random.sample(dictionary, n_words)
     mistyped_list = mistype_list(random_words)
 
-    list_to_file(mistyped_list, "in_words.txt")
+    list_to_file(mistyped_list, "data/in_words.txt")
 
     # SIMPLE EDIT DISTANCE
     times = []
@@ -38,7 +38,7 @@ def main():
         if result[0] == word_query[0]:
             n_hit += 1
 
-    list_to_file(out_data, "out_simple_ed.txt")
+    list_to_file(out_data, "data/out_simple_ed.txt")
     print("Simple edit distance\n Average time: ", sum(times) / n_words)
     print("Hit rate: ", n_hit / n_words, "\n\n")
 
@@ -65,7 +65,7 @@ def main():
                 if result[0] == word_query[0]:
                     n_hit += 1
 
-            list_to_file(out_data, "out_jacc_" + str(jacc) + "_" + str(n_gram) + "n.txt")
+            list_to_file(out_data, "data/out_jacc_" + str(jacc) + "_" + str(n_gram) + "n.txt")
             print("Edit distance with jaccard >= " + str(jacc) +" and ngram of size " +str(n_gram))
             print("Average time: ", sum(times) / n_words)
             print("Hit rate: ", n_hit / n_words, "\n\n")
@@ -88,7 +88,7 @@ def main():
             if result[0] == word_query[0]:
                 n_hit += 1
 
-        list_to_file(out_data, "out_1gram_" + str(n_gram) + "n.txt")
+        list_to_file(out_data, "data/out_1gram_" + str(n_gram) + "n.txt")
         print("Edit distance on words with at least 1 common ngram of size " + str(n_gram))
         print("Average time: ", sum(times) / n_words)
         print("Hit rate: ", n_hit / n_words, "\n\n")

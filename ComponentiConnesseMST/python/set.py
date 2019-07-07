@@ -1,73 +1,59 @@
-# Node of a set, size is set only for the representative
+# Node of a tree that represents a set
 class Node:
-    def __init__(self, value, representative, next, size, last):
+    def __init__(self, value, father, rank):
         self.value = value
-        self.representative = representative
-        self.next = next
-        self.size = size
-        self.last = last
+        self.father = father
+        self.rank = rank
+        self.sons = []
 
 
-# A set is identified by a 2 element list containing the head of the set and the number of elements
+# Create the tree with rank = 0
 def make_set(value):
-    first_node = Node(value, None, None, 1, None)
-    first_node.representative = first_node
-    first_node.last = first_node
-    return first_node
+    node = Node(value, None, 0)
+    node.father = node
+    return node
 
 
-# Returns the representative
-def find_set(node):
-    return node.representative
-
-
-# Joins together two sets using weighted union
-def union(set1, set2):
-    set1rep = find_set(set1)
-    set2rep = find_set(set2)
-
-    # Check if they are different sets
-    if set1rep == set2rep:
-        return set1
-
-    size1 = set1rep.size
-    size2 = set2rep.size
-
-    if size1 < size2:
-        # Concatenate 1 to 2
-        bigger_set = set2rep
-        smaller_set = set1rep
+# Joins together 2 trees
+def link(x, y):
+    if x.rank > y.rank:
+        y.father = x
+        x.sons.append(y)
     else:
-        # Concatenate 2 to 1
-        bigger_set = set1rep
-        smaller_set = set2rep
+        x.father = y
+        y.sons.append(x)
+        if x.rank == y.rank:
+            y.rank += 1
 
-    # Concatenate smaller to bigger
-    bigger_set.last.next = smaller_set
+    return find_set(x)
 
-    # Set the representative of the smaller set
-    smaller_set.representative = bigger_set
-    smaller_nodes = smaller_set
 
-    while smaller_nodes.next is not None:
-        smaller_nodes = smaller_nodes.next
-        smaller_nodes.representative = bigger_set
+# Goes up the tree and simplifies the tree using path compression
+def find_set(node):
+    if node != node.father:
+        first_father = find_set(node.father)
 
-    # Set the last to the last of the smaller set
-    bigger_set.last = smaller_nodes
-    bigger_set.size = size1 + size2
+        # Update the sons of the father
+        if node.father != first_father:
+            node.father = first_father
+            node.father.sons.append(node)
+            node.father.sons += node.sons
 
-    return bigger_set
+    return node.father
+
+
+# Joins together two sets
+def union(set1, set2):
+    return link(find_set(set1), find_set(set2))
 
 
 # Returns a list containing the values in the set
 def set_to_list(set):
-    element = set.representative
+    # After the find set there will only be a father with n - 1 sons
+    first_father = find_set(set)
     list = []
-    if element is not None:
-        list.append(element.value)
-        while element.next is not None :
-            element = element.next
-            list.append(element.value)
+    list.append(first_father.value)
+    for son in first_father.sons:
+            list.append(son.value)
 
     return list

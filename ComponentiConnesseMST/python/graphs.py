@@ -1,34 +1,9 @@
 import random
+from enum import Enum
 
 import numpy as np
 
 from set import *
-
-
-# Create a random directed graph with n nodes and randomly connects it
-# p is the probability that an arc will be activated
-def create_digraph(n, p):
-    graph = np.zeros((n, n))
-
-    with np.nditer(graph, flags=['multi_index'], op_flags=['readwrite']) as it:
-        for x in it:
-            if p > random.uniform(0, 1) and it.multi_index[0] != it.multi_index[1]:
-                x[...] = 1
-
-    return graph
-
-
-# Create a random weighted directed graph with n nodes and randomly connects it
-# p is the probability that an arc will be activated, min and max are the bounds for the weights
-def create_weighted_digraph(n, p, min, max):
-    graph = np.zeros((n, n))
-
-    with np.nditer(graph, op_flags=['readwrite']) as it:
-        for x in it:
-            if p > random.uniform(0, 1) and it.multi_index[0] != it.multi_index[1]:
-                x[...] = random.randint(min, max)
-
-    return graph
 
 
 # Create a random graph with n nodes and randomly connects it
@@ -62,6 +37,17 @@ def create_weighted_graph(n, p, min, max):
                     graph[index] = rand_number
                     graph[(index[1], index[0])] = rand_number
             it.iternext()
+
+    return graph
+
+
+# Creates graph from a list of arcs
+def create_graph_from_arcs(n, arcs):
+    graph = np.zeros((n, n))
+
+    for arc in arcs:
+        graph[arc[1][0], arc[1][1]] = 1
+        graph[arc[1][1], arc[1][0]] = 1
 
     return graph
 
@@ -103,9 +89,9 @@ def connected_components(graph):
     final_list = []
     all_repr = []
     for cc in sets:
-        if cc.representative not in all_repr:
+        if find_set(cc) not in all_repr:
             final_list.append(set_to_list(cc))
-            all_repr.append(cc.representative)
+            all_repr.append(find_set(cc))
 
     return final_list
 
@@ -158,3 +144,59 @@ def kruskal_algorithm(graph):
             union(sets[u], sets[v])
 
     return MST
+
+
+# Structure that will be used in BFS
+class BFSNode:
+    def __init__(self, d, p, color):
+        self.d = d
+        self.p = p
+        self.color = color
+
+
+class Color(Enum):
+    WHITE = 0
+    GRAY = 1
+    BLACK = 2
+
+
+# Breadth first search, returns a list of nodes
+def BFS(graph, start):
+    Q = []
+
+    n = graph.shape[0]
+    bfs_nodes = []
+    for i in range(0, n):
+        node = BFSNode(np.inf, None, Color.WHITE)
+        bfs_nodes.append(node)
+
+    bfs_nodes[start].d = 0
+    bfs_nodes[start].color = Color.GRAY
+
+    Q.append(start)
+
+    while len(Q) != 0:
+        u = Q.pop()
+        adj = adjacent_nodes(graph, u)
+
+        for v in adj:
+            if bfs_nodes[v].color == Color.WHITE:
+                bfs_nodes[v].color = Color.GRAY
+                bfs_nodes[v].d = bfs_nodes[u].d + 1
+                bfs_nodes[v].p = u
+                Q.insert(0, v)
+
+        bfs_nodes[u].color = Color.BLACK
+
+    return bfs_nodes
+
+
+# Returns the maximum value of a BFS visit
+def BFS_max(graph, start):
+    res = BFS(graph, start)
+    max = np.NINF
+    for element in res:
+        if element.d > max:
+            max = element.d
+
+    return max
