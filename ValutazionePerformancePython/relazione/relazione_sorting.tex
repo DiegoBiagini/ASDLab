@@ -2,19 +2,65 @@
 \author{Diego Biagini}
 \title{Valutazione prestazioni algoritmi di sorting}
 
-
+\usepackage[utf8]{inputenc}
 \usepackage[margin=3cm]{geometry}
-
+\usepackage{algorithmic}
+\usepackage{algorithm}
+\floatname{algorithm}{}
 
 \begin{document}
 \maketitle
 \newpage
 \section{Introduzione}
-Questa è una prova per vedere se Latex va a capo o no
-da quanto mi è sembrato ciao ciao ciao cia o cp,e di capire gli devi dire te tutti i line break, il che è
-un po' una rotturaq
+Una delle classi di problemi più studiate nel campo dell'informatica sono i problemi di ordinamento.
+Essi possono essere descritti nel seguente modo:\\ a partire da una sequenza di dati 
+$S = \{x_1, ... , x_n\}$ in ingresso trovare una permutazione $S^{\prime} = \{x_1^{\prime}, ... , x_n^{\prime}\}$ di essa tale che $x_1^{\prime} \leq x_2^{\prime} \leq ... \leq x_n{\prime}$.\\
+Per la loro risoluzione sono stati pensati numerosi algoritmi di ordinamento,questi differiscono soprattutto per i campi di applicazione e per il comportamento rispetto a certe sequenze di ingresso.\\
+Per valutare quale sia meglio usare è quindi necessario vedere quanto sono efficienti, ovvero quanto tempo impiegano ad essere eseguiti, rispetto a insiemi di dati particolari e con dimensione sempre crescente.\\
+Gli algoritmi che saranno presi in esame sono \textbf{Insertion sort} e \textbf{Quicksort}.
+
 
 \section{Cenni teorici}
+
+\subsection{Tempo di esecuzione di un algoritmo}
+Nell'analizzare un qualsiasi algoritmo emerge la necessità di definire in modo chiaro le sue prestazioni, senza essere vincolati a fattori come la macchina su cui viene eseguito.\\ Per questo motivo supponiamo sempre che essi siano eseguiti su una \textbf{RAM(Random access machine)}, una macchina astratta con le seguenti caratteristiche:
+\begin{itemize}
+\item può essere eseguita solo un'operazione alla volta(macchina monoprocessore)
+\item operazioni elementari eseguite in tempo costante
+\item infinite celle di memoria di dimensione finita
+\end{itemize}
+I parametri che di norma vengono presi in considerazione per valutare l'efficienza sono il tempo di esecuzione(misurato in numero di operazioni elementari effettuate) e la quantità di memoria impiegata.\\
+\\
+Nel caso di algoritmi il cui scopo è analizzare e modificare grandi quantità di dati, come quelli di ordinamento, c'è bisogno di vedere come questi parametri si comportano all'aumentare della quantità di dati presi in esame.\\
+Per far questo viene usata la \textbf{notazione asintotica}, attraverso essa siamo in grado di descrivere un limite stretto($\Theta$),superiore($O$) o inferiore($\Omega$) di una funzione al tendere di uno dei suoi parametri all'infinito.\\
+Per esempio $f(n) = \Theta(n^2)$ indica che $f$ si comporta come una parabola quando n( il numero di elementi da ordinare nel nostro caso) tende ad infinito, non ci preoccupiamo dei termini di primo o secondo grado.
+
+\newpage
+\subsection{Insertion sort}
+Insertion sort è un algoritmo di ordinamento iterativo utile soprattutto per ordinare insiemi con un numero ridotto di elementi.
+
+Lo pseudocodice è il seguente:\\
+\begin{algorithm}
+\caption{Insertion-Sort(A)}
+\begin{algorithmic}[1]
+\FOR{$j\leftarrow2$ to $A.lenght$} 
+	\STATE $key \leftarrow A[j]$
+	\STATE $i \leftarrow j - 1$
+	\WHILE{ $ i > 0 $ \AND  $A[i] > key$}
+		\STATE	$A[i+1] \leftarrow A[i]$
+		\STATE $ i \leftarrow i - 1$
+	\ENDWHILE
+	\STATE $ A[i+1] \leftarrow key$
+\ENDFOR 
+\end{algorithmic}
+\end{algorithm}
+\\
+La correttezza dell'algoritmo può essere dimostrata con la sua invariante di ciclo:\\ prima della j-esima iterazione il sotto-array $A[1 ... j-1]$ è ordinato e contiene tutti i valori che vi erano presenti inizialmente.\\
+E' facile verificare che il caso migliore di questo algoritmo si ha quando l'array dato è già ordinato, infatti in questo caso non entreremo mai nel ciclo while interno.\\
+Da questo possiamo dire che nel \textbf{caso migliore} insertion sort è un $\Theta(n)$.\\
+Il \textbf{caso peggiore} si ha invece quando l'array è ordinato in senso decrescente, in questo caso il ciclo while controllerà tutti i valori precedenti a j e il tempo di esecuzione asintotico è $\Theta(n^2)$.\\
+Il caso medio ha un comportamento simile al caso peggiore,infatti mediamente metà elementi di $A[1 ... j-1]$ sono più piccoli di $A[j]$, nonostante questo abbiamo sempre un comportamento quadratico e possiamo dire che anche nel \textbf{caso medio} insertion sort è un $\Theta(n^2)$
+\subsection{Quicksort}
 
 \section{Esperimenti svolti}
 
