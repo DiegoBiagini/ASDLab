@@ -5,7 +5,7 @@ from ngram import *
 
 def main():
     # Words that will be tested
-    n_words = 5
+    n_words = 100
 
     dict_name = "../dict_nomi_95000.txt"
 
@@ -14,10 +14,15 @@ def main():
     n_grams_lenght = [2, 3, 4]
 
     dictionary = file_to_list(dict_name)
+    dictionary_spaces = add_spaces(dictionary)
+
     random_words = random.sample(dictionary, n_words)
+
     mistyped_list = mistype_list(random_words)
+    mistyped_list_spaces = [(" " + el[0] + " ", " " + el[1] + " ") for el in mistyped_list]
 
     list_to_file(mistyped_list, "data/in_words.txt")
+
 
     # SIMPLE EDIT DISTANCE
     times = []
@@ -42,9 +47,10 @@ def main():
     print("Simple edit distance\n Average time: ", sum(times) / n_words)
     print("Hit rate: ", n_hit / n_words, "\n\n")
 
+
     for n_gram in n_grams_lenght:
 
-        n_gram_dictionary = dictionary_ngram(dictionary, n_gram)
+        n_gram_dictionary = dictionary_ngram(dictionary_spaces, n_gram)
 
         # EDIT DISTANCE ON JACCARD > THRESHOLD
 
@@ -54,7 +60,7 @@ def main():
 
             out_data = []
 
-            for word_query in mistyped_list:
+            for word_query in mistyped_list_spaces:
                 elapsed_time = timer()
                 result = closest_word_ngram_ed_jacc(word_query[1], n_gram, n_gram_dictionary, jacc)
                 elapsed_time = timer() - elapsed_time
@@ -76,8 +82,7 @@ def main():
         n_hit = 0
 
         out_data = []
-
-        for word_query in mistyped_list:
+        for word_query in mistyped_list_spaces:
             elapsed_time = timer()
             result = closest_word_ngram_ed_1gram(word_query[1], n_gram, n_gram_dictionary)
             elapsed_time = timer() - elapsed_time

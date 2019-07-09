@@ -1,5 +1,3 @@
-a
-ab
 abaco
 abacuc
 abadessa
@@ -10678,8 +10676,6 @@ azzurrità
 azzurrite
 azzurrognola
 azzurrognolo
-b
-ba
 babau
 babbeo
 babbetto
@@ -14937,8 +14933,6 @@ byron
 byroniano
 byronismo
 byte
-c
-ca
 cab
 cabala
 cabaletta
@@ -23228,7 +23222,6 @@ cutrofiano
 cuveglio
 cuvio
 cyberspazio
-d
 da
 dabbasso
 dabbenaggine
@@ -27626,8 +27619,6 @@ duunvirato
 duvet
 duvetina
 dvd
-e
-è
 ebanista
 ebanisteria
 ebanite
@@ -31405,7 +31396,6 @@ eziologica
 eziologico
 eziopatogenesi
 ezio
-f
 fabbisogno
 fabbricabile
 fabbricabilità
@@ -34656,7 +34646,6 @@ futurologhi
 futurologia
 futurologo
 futuro
-g
 gabardine
 gabarra
 gabbamondo
@@ -37691,7 +37680,6 @@ guttiferale
 gutturale
 gutturalismo
 guyana
-h
 habitat
 habitué
 habitus
@@ -37779,7 +37767,6 @@ hubble
 humour
 humus
 hurrà
-i
 iacopo
 iaculatore
 iaculo
@@ -46452,7 +46439,6 @@ ivo
 ivrea
 izano
 izba
-j
 jack
 jacopo
 jacurso
@@ -46494,7 +46480,6 @@ junker
 jupon
 juventino
 juventus
-k
 kabul
 kafka
 kafkiano
@@ -46570,7 +46555,6 @@ kuwait
 kuwaitiano
 kyoto
 kyrgyzstan
-l
 là
 labaro
 labbo
@@ -48959,7 +48943,6 @@ luxmetro
 luzzana
 lxccix
 lxxlvi
-m
 maastricht
 macabro
 macaco
@@ -54179,7 +54162,6 @@ mutue
 muzio
 muzzano
 myanmar
-n
 nababbo
 nabucodonosor
 n'accese
@@ -55933,7 +55915,6 @@ nuziale
 nuzialità
 nuzzolo
 nylon
-o
 oasistica
 oasistico
 oasi
@@ -58762,7 +58743,6 @@ ozono
 ozonosfera
 ozonoterapia
 ozzero
-p
 pabillonis
 pacare
 pacatezza
@@ -66809,7 +66789,6 @@ puzzola
 puzzolente
 puzzona
 puzzonata
-q
 qatar
 qatariano
 qua
@@ -67244,7 +67223,6 @@ quotizzare
 quotizzato
 quotizzazione
 quoziente
-r
 ra
 rabarbaro
 rabat
@@ -73932,7 +73910,6 @@ ruzzolato
 ruzzolii
 ruzzolio
 ruzzolone
-s
 saba
 sabatina
 sabato
@@ -85871,7 +85848,6 @@ swazi
 swaziland
 swing
 sydney
-t
 tabaccaia
 tabaccaio
 tabaccando
@@ -91037,7 +91013,6 @@ tv
 twill
 twist
 tzigano
-u
 uabaio
 uadi
 uau
@@ -92200,7 +92175,6 @@ uzbeko
 uzza
 uzzolo
 uzzo
-v
 va
 vacabile
 vacando
@@ -94711,7 +94685,6 @@ vuote
 vuotezza
 vuotometro
 vuotura
-w
 wafer
 wagneriano
 wagon
@@ -94747,7 +94720,6 @@ wto
 wwf
 www
 wyoming
-x
 xantofilla
 xantogenato
 xantogenico
@@ -94800,7 +94772,6 @@ xilosio
 xml
 xx
 xxx
-y
 yacht
 yachting
 yachtsman
@@ -94825,7 +94796,6 @@ york
 yucatan
 yucca
 yukon
-z
 zabaglione
 zabaione
 zaccanopoli

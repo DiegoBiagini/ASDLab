@@ -32,10 +32,12 @@ def mistype_list(words):
     out_list = []
     for word in words:
 
-        if len(word) == 1:
+        if len(word) <= 3:
             n_change = 1
+        elif len(word) <= 5:
+            n_change = random.randint(1, 2)
         else:
-            n_change = random.randint(1, len(word)//2)
+            n_change = random.randint(1, 3)
 
         out_list.append((word, mistype_word(word, n_change)))
 
@@ -56,3 +58,12 @@ def file_to_list(filename):
 
     # Remove \n
     return [x.strip() for x in out_list]
+
+
+# Takes a list of words and adds at the beginning and end of each of them a space
+def add_spaces(list):
+    list2 = []
+    for element in list:
+        list2.append(" " + element + " ")
+
+    return list2

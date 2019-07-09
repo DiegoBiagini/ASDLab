@@ -83,27 +83,6 @@ def edit_distance(x, y):
     return c[len(x), len(y)]
 
 
-# Prints the operations used to transform a string in another one
-def op_sequence(op, i, j):
-    if i == 0 and j == 0:
-        return
-    if op[i, j] == Op.COPY.value or op[i, j] == Op.REPLACE.value:
-        nexti = i - 1
-        nextj = j - 1
-    elif op[i, j] == Op.TWIDDLE.value:
-        nexti = i - 2
-        nextj = j - 2
-    elif op[i, j] == Op.DELETE.value:
-        nexti = i - 1
-        nextj = j
-    else:
-        nexti = i
-        nextj = j - 1
-
-    op_sequence(op, nexti, nextj)
-    print(Op(op[i, j]).name)
-
-
 # Finds the closest word using simple edit distance
 # Takes the word to examine and a list of words(dictionary)
 # Returns the closest word and its distance from the query
