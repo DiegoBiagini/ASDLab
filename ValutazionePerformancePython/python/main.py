@@ -8,39 +8,40 @@ from sorting import *
 
 def main():
     # Maximum allowed time for an execution : 3 minutes
-    max_time = 120
+    max_time = 180
     results = []
+    save = true
 
     # Insertion sort
 
-    test_sorting(max_time, insertion_sort, get_random_nodup, results, True, "data/insertion_rand")
+    results = test_sorting(max_time, insertion_sort, get_random_nodup, save, "data/insertion_rand")
     print("Insertion sort su array casuale:\n", results)
     plot_and_save("Insertion sort casuale", results)
 
-    test_sorting(max_time, insertion_sort, get_random_asc, results, True, "data/insertion_best")
+    results = test_sorting(max_time, insertion_sort, get_random_asc, save, "data/insertion_best")
     print("Insertion sort su array crescente(best case):\n", results)
     plot_and_save("Insertion sort best case", results)
 
-    test_sorting(max_time, insertion_sort, get_random_desc, results, True, "data/insertion_worst")
+    results = test_sorting(max_time, insertion_sort, get_random_desc, save, "data/insertion_worst")
     print("Insertion sort su array decrescente(worst case):\n", results)
     plot_and_save("Insertion sort worst case", results)
 
     # Quick sort
-    test_sorting(max_time, quick_sort, get_random_nodup, results, True, "data/quick_rand")
+    results = test_sorting(max_time, quick_sort, get_random_nodup, save, "data/quick_rand")
     print("Quicksort su array casuale:\n", results)
     plot_and_save("Quick sort casuale", results)
 
-    test_sorting(max_time, quick_sort, get_quick_best_case, results, True, "data/quick_best")
+    results = test_sorting(max_time, quick_sort, get_quick_best_case, save, "data/quick_best")
     print("Quicksort su array apposito(best case):\n", results)
     plot_and_save("Quick sort best case", results)
 
-    test_sorting(max_time, insertion_sort, get_random_desc, results, True, "data/quick_worst")
+    results = test_sorting(max_time, insertion_sort, get_random_desc, save, "data/quick_worst")
     print("Quicksort su array crescente(worst case):\n", results)
     plot_and_save("Quick sort worst case", results)
 
     # Both
-    test_both(max_time, results)
-    print("Insertion sort e quicksort su stesso array:\n", results, True)
+    results = test_both(max_time)
+    print("Insertion sort e quicksort su stesso array:\n", results, save)
     plot_and_save_both("Insertion sort e Quicksort casuale",results)
 
 
@@ -53,8 +54,8 @@ def next_size(current_size):
 # the function that will generate the array of values
 # puts into the list passed as a parameters the tuples: (size, time)
 # If save_to_file is true saves the various array to file
-def test_sorting(max_time, sorting_f, random_array_f, results, save_to_file, filename):
-    results.clear()
+def test_sorting(max_time, sorting_f, random_array_f, save_to_file, filename):
+    results = []
     current_size = 1
     sorting_time = 0
 
@@ -81,8 +82,8 @@ def test_sorting(max_time, sorting_f, random_array_f, results, save_to_file, fil
 
 # Tests both insertion and quick on the same random arrays
 # puts into the list passed as a parameters the tuples: (size, time_insertion, time_quicksort)
-def test_both(max_time, results, save_to_file):
-    results.clear()
+def test_both(max_time, save_to_file):
+    results = []
     current_size = 1
     bigger_time = 0
 

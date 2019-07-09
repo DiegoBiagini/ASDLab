@@ -109,7 +109,7 @@ Per questo, entrambi gli algoritmi saranno eseguiti su insiemi:
 \end{itemize}
 
 La dimensione degli insiemi da ordinare sarà incrementata esponenzialmente.\\
-Iniziamo quindi ordinando un certo tipo di insieme di dimensione pari a 1 con un algoritmo, continuiamo quindi a generare nuovi insiemi di quel tipo di dimensione doppia finchè l'algoritmo non impiega più di qualche minuto(indicativamente 2 minuti) per terminare l'ordinamento.\\
+Iniziamo quindi ordinando un certo tipo di insieme di dimensione pari a 1 con un algoritmo, continuiamo quindi a generare nuovi insiemi di quel tipo di dimensione doppia finchè l'algoritmo non impiega più di qualche minuto(indicativamente 3 minuti) per terminare l'ordinamento.\\
 \'E stato scelto di raddoppiare la dimensione degli insiemi dopo ogni test, piuttosto che moltiplicarla per 10, in modo che il tempo di esecuzione tra un test e il successivo non sia troppo diverso.\\
 Questo comportamento si noterebbe soprattutto nel caso peggiore di insertion sort, una decuplicazione della dimensione comporta infatti un tempo di esecuzione(teorico) cento volte superiore al precedente.\\
 Infine la procedura di testing sarà eseguita sullo stesso insieme di dati(con permutazione casuale) per entrambi gli algoritmi, in modo da vedere effettivamente quale è più performante su uno stesso problema.\\\\
@@ -161,14 +161,23 @@ plot_and_save_both(title, results)
 Tracciano il grafo dimensione-tempo voluto e lo salvano su file.
 \section{Risultati sperimentali}
 \subsection{Insertion sort}
-\includegraphics[scale=0.8]{InsertionSortCasuale}\\
-\includegraphics[scale=0.8]{InsertionSortWorstCase}\\
+\begin{center}
+\includegraphics[scale=0.5]{InsertionSortCasuale}\\
+\includegraphics[scale=0.5]{InsertionSortBestCase}\\
+\includegraphics[scale=0.5]{InsertionSortWorstCase}\\
+\end{center}
+
 \subsection{Quicksort}
-\includegraphics[scale=0.8]{QuickSortCasuale}\\
-\includegraphics[scale=0.8]{QuickSortBestCase}\\
-\includegraphics[scale=0.8]{QuickSortWorstCase}\\
+\begin{center}
+\includegraphics[scale=0.5]{QuickSortCasuale}\\
+\includegraphics[scale=0.5]{QuickSortBestCase}\\
+\includegraphics[scale=0.5]{QuickSortWorstCase}\\
+\end{center}
+
 \subsection{Entrambi gli algoritmi}
-\includegraphics[scale=0.8]{InsertionSortEQuicksortCasuale}\\
+\begin{center}
+\includegraphics[scale=0.5]{InsertionSortEQuicksortCasuale}\\
+\end{center}
 
 \section{Analisi e conclusioni}
 Analizzando i risultati degli esperimenti è possibile verificare ciò che ci dice la teoria.\\\\
