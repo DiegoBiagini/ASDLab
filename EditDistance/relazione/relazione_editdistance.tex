@@ -1,0 +1,36 @@
+\documentclass[]{article}
+\author{Diego Biagini}
+\title{Edit distance}
+
+\usepackage[utf8]{inputenc}
+\usepackage[margin=3cm]{geometry}
+\usepackage{algorithmic}
+\usepackage{algorithm}
+\usepackage{graphicx}
+\floatname{algorithm}{}
+
+
+\begin{document}
+\maketitle
+\newpage
+\section{Introduzione}
+Un'operazione che viene frequentemente eseguita in programmi di vario tipo è ,data una parola sbagliata oppure incompleta, trovare la parola più vicina ad essa.\\
+Esistono numerosi approcci per risolvere questo problema, tutti questi si basano sul confronto della parola voluta con un dizionario delle parole possibili.\\
+Tra queste parole è possibile trovare quella più vicina attraverso la cosiddetta edit-distance, distanza di editing, più questa è piccola più le parole sono simili tra loro.\\
+Eseguire questa operazione per ogni parola possibile non è molto raccomandabile dato il grande numero di parole in un dizionario.\\
+Inoltre la ricerca della parola più vicina viene usata molto spesso in applicazioni real time, come suggerimenti di autocompletamento, è quindi necessario che abbia buoni tempi di esecuzione, anche minori di un secondo.\\
+Per raggiungere questo obiettivo è necessario diminuire il numero di parole con cui eseguiremo edit-distance, garantendo però che la parola più vicina sia considerata tra questi confronti.\\
+\section{Cenni teorici}
+\subsection{Edit distance}
+\subsection{Intersezione di n-gram}
+\subsection{Coefficiente di Jaccard}
+
+\section{Esperimenti svolti}
+
+\section{Documentazione del codice}
+
+\section{Risultati sperimentali}
+
+\section{Analisi e conclusioni}
+
+\end{document}

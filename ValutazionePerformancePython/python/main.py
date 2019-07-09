@@ -10,7 +10,7 @@ def main():
     # Maximum allowed time for an execution : 3 minutes
     max_time = 180
     results = []
-    save = true
+    save = True
 
     # Insertion sort
 
@@ -18,7 +18,7 @@ def main():
     print("Insertion sort su array casuale:\n", results)
     plot_and_save("Insertion sort casuale", results)
 
-    results = test_sorting(max_time, insertion_sort, get_random_asc, save, "data/insertion_best")
+    results = test_sorting(60, insertion_sort, get_random_asc, save, "data/insertion_best")
     print("Insertion sort su array crescente(best case):\n", results)
     plot_and_save("Insertion sort best case", results)
 
