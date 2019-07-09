@@ -22,7 +22,7 @@ def main():
     mistyped_list_spaces = [(" " + el[0] + " ", " " + el[1] + " ") for el in mistyped_list]
 
     list_to_file(mistyped_list, "data/in_words.txt")
-
+    print("Written words to file")
 
     # SIMPLE EDIT DISTANCE
     times = []

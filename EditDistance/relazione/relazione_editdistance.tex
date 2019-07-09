@@ -119,7 +119,64 @@ mistype_list(words)
 Prende come parametro una lista di parole e cambia un numero casuale di lettere in ognuna di esse.\\ Questo numero è scelto in base alla dimensione della parola: se è lunga meno di 3 caratteri sarà cambiato 1 carattere, se è lunga da 4 a 5 ne saranno cambiati 1 o 2, se è lunga più di 6 ne saranno cambiati 1,2 o 3.\\
 \newpage
 \section{Risultati sperimentali}
+\begin{verbatim}
+Simple edit distance
+Average time:  48.16885883233022 s
+Hit rate:  0.82 
 
+Edit distance with jaccard >= 0.2 and ngram of size 2
+Average time:  1.496577897810057 s
+Hit rate:  0.82 
+Edit distance with jaccard >= 0.5 and ngram of size 2
+Average time:  0.37710340867997727 s
+Hit rate:  0.57 
+Edit distance with jaccard >= 0.8 and ngram of size 2
+Average time:  0.3744560772097975 s
+Hit rate:  0.04 
+
+Edit distance on words with at least 1 common ngram of size 2
+Average time:  40.948803005170014 s
+Hit rate:  0.82 
+
+Edit distance with jaccard >= 0.2 and ngram of size 3
+Average time:  0.47149874570994144 s
+Hit rate:  0.7 
+Edit distance with jaccard >= 0.5 and ngram of size 3
+Average time:  0.3355103827901621 s
+Hit rate:  0.26 
+Edit distance with jaccard >= 0.8 and ngram of size 3
+Average time:  0.334847589730125 s
+Hit rate:  0.03 
+
+Edit distance on words with at least 1 common ngram of size 3
+Average time:  7.162298879260052
+Hit rate:  0.83 s
+
+Edit distance with jaccard >= 0.2 and ngram of size 4
+Average time:  0.33352027662000183 s
+Hit rate:  0.57 
+Edit distance with jaccard >= 0.5 and ngram of size 4
+Average time:  0.2908330125700377 s
+Hit rate:  0.12 
+Edit distance with jaccard >= 0.8 and ngram of size 4
+Average time:  0.29100674367986357 s
+Hit rate:  0.03 
+
+Edit distance on words with at least 1 common ngram of size 4
+Average time:  1.9852423627203097 s
+Hit rate:  0.75 
+\end{verbatim}
+\newpage
 \section{Analisi e conclusioni}
-
+La prima cosa che è possibile notare nell'analizzare i dati è la notevole velocità assunta da ricerche di parole più vicine attraverso una soglia del coefficiente di Jaccard.\\
+Questa cosa va però sicuramente a scapito dell'accuratezza dell'algoritmo, infatti con una soglia superiore allo 0.8 è quasi impossibile trovare esattamente la parola che stavamo cercando, quindi è da escludere in un uso reale.\\
+Altra cosa che è sicuramente da escludere è il semplice edit-distance con tutte le parole del dizionario, infatti con un tempo di esecuzione medio di 48 secondi è veramente difficile da usare, sia in applicazioni real time come suggerimenti, sia in campi più lenienti come la correzione di documenti.\\
+Non guadagniamo nemmeno la certezza di trovare la parola esatta con questo metodo, ha sì un tasso di successo tra i più alti, però in parole in cui cambia solamente un carattere è molto difficile trovare con certezza la parola esatta.\\
+Un comportamento simile lo ha anche il confronto con parole che condividono almeno un 2-gram, infatti ci saranno così tante parole che condividono almeno un 2-gram che il guadagno di questo filtro non è abbastanza.
+Usando la ricerca tra almeno un 3-gram e 4-gram invece abbiamo un notevole aumento di velocità mantenendo un buon hit-rate, ma comunque non abbastanza per risposte immediate.\\
+Inoltre usare i 4-gram in questo modo ha funzionato bene in questo caso, dato che delle parole scelte casualmente è facile che siano più lunghe del normale, se dovessimo correggere un documento con parole corte infatti avremmo sicuramente un hit rate più basso.\\
+Infine rimangono le ricerche su parole con un coefficiente di Jaccard superiore a 0.2 o 0.5.\\
+Aumentando la dimensione degli n-gram usati e la soglia si può vedere come i tempi di esecuzione e gli hit rate scendano.\\
+Il migliore compromesso che siamo in grado di trovare tra accuratezza e velocità sembra essere ricerca tra 3-gram con coefficiente di Jaccard superiore a 0.2, questo infatti ha un tempo medio di esecuzione minore di mezzo secondo e un hit rate del 70\%.\\
+Per applicazioni in cui è necessaria la massima accuratezza invece sembra più conveniente la ricerca tra 2-gram con coefficiente di Jaccard superiore a 0.2, questo con un tempo di poco più di un secondo offre un'accuratezza dell'82\%, che può essere considerata quasi ottima se confrontata con l'edit distance su tutti gli elementi del dizionario.\\ 
 \end{document}
