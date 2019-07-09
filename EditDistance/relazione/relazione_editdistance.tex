@@ -7,6 +7,7 @@
 \usepackage{algorithmic}
 \usepackage{algorithm}
 \usepackage{graphicx}
+\usepackage{amsmath}
 \floatname{algorithm}{}
 
 
@@ -22,13 +23,101 @@ Inoltre la ricerca della parola più vicina viene usata molto spesso in applicaz
 Per raggiungere questo obiettivo è necessario diminuire il numero di parole con cui eseguiremo edit-distance, garantendo però che la parola più vicina sia considerata tra questi confronti.\\
 \section{Cenni teorici}
 \subsection{Edit distance}
+Date due sequenze di caratteri $X$ e $Y$ è possibile definire la distanza di edit tra esse come il minimo numero di operazioni elementari da eseguire su una delle due in modo che diventino uguali.\\
+Le operazioni elementari sono le seguenti:\\
+\begin{itemize}
+\item Lasciare immutato un carattere
+\item Inserimento di un carattere
+\item Rimozione di un carattere
+\item Sostituzione di un carattere
+\item Scambio di due caratteri
+\end{itemize}
+Ognuna di esse ha un certo costo predefinito.\\
+\'E possibile definire una sottostruttura ottima del problema.\\
+Definiamo $X_i=<x_1,x_2,...,x_i>$ e $Y_j=<y_1,y_2,...,y_j>$ sottosequenze di $X$ e $Y$.\\
+Se $C_{i,j}$ è la soluzione ottima di $edit-distance(X_i,Y_j)$ essa contiene soluzioni ottime dei problemi precedenti.\\
+Quindi possiamo definire $C$ ricorsivamente in questo modo:\\
+\[
+C_{i,j} = min
+\begin{cases}
+C_{i-1,j-1} + cost(copy)    & \mbox{se} X[i]=Y[j]\\
+C_{i-1,j-1} + cost(replace) & \mbox{se} X[i]\neq Y[j]\\
+C_{i-2,j-2} + cost(twiddle) & \mbox{se } i,j\geq 2, X[i]=Y[j-1] \mbox{ e } X[i-1]=Y[j]\\
+C_{i-1,j} + cost(delete)    & \mbox{sempre}\\
+C_{i,j-1} + cost(insert)    & \mbox{sempre} \\
+\end{cases}
+\]
+\\
+Usando questo approccio e salvando in una tabella i costi dei sottoproblemi, avremo che il costo di tempo e spazio per l'algoritmo è $\Theta(m\cdot n)$ dove m e n sono le lunghezze delle sequenze originali.\\
 \subsection{Intersezione di n-gram}
-\subsection{Coefficiente di Jaccard}
-
+Data una sequenza di caratteri e un valore n è possibile definire un n-gram della sequenza come una sua sottosequenza di n elementi.\\
+Per esempio i 3-gram della parola "parola" sono: "par","aro","rol","ola".\\
+Un utilizzo degli n-gram è quello di controllare se due parole sono relativamente vicine tra loro, infatti siamo sicuri che se tra due parole non si hanno n-gram in comune allora difficilmente sono simili.\\\\
+\'E possibile quantificare questa somiglianza attraverso il \textbf{coefficiente di Jaccard}.\\
+Dati due insiemi $X$ e $Y$ il coefficiente di Jaccard fra i due è: $JC=\frac{\lvert X\cap Y \rvert}{\lvert X\cup Y \rvert}$\\
+Se i due insiemi coincidono allora il coefficiente di Jaccard è pari ad 1.
 \section{Esperimenti svolti}
-
+Ciò che ci interessa verificare è quale modo di trovare la parola più vicina ad una query Q è migliore.\\
+In questo controllo ci sarà bisogno di tenere conto del tempo impiegato nella ricerca e se il risultato della ricerca è quello giusto.\\
+I modi di trovare la parola più vicina presi in considerazione sono i seguenti:\\
+\begin{itemize}
+\item eseguire edit distance tra Q e tutte le parole nel dizionario, restituiamo quindi quella con distanza minore
+\item eseguire edit distance tra Q e le parole nel dizionario che hanno almeno un n-gram in comune con Q
+\item eseguire edit distance tra Q e le parole nel dizionario il cui coefficiente di Jaccard con Q è superiore a una certa soglia
+\end{itemize}
+Il dizionario usato contiene 95000 parole della lingua italiana compresi i nomi propri.\\
+I test saranno eseguiti su un insieme di parole sbagliate scelte a caso.\\
+Per ottenerlo saranno scelte un certo numero di parole dal dizionario, dopodichè modificheremo un numero casuale di caratteri in ognuna di esse.\\
+Nel calcolare gli n-gram di una parola saranno aggiunti all'inizio e alla fine di essa degli spazi, in questo modo si può distinguere se due parole iniziano o finiscono nello stesso modo.\\ 
+Eseguiremo poi i tre modi sopracitati sull'insieme delle parole sbagliate, verificando anche se la parola più vicina trovata corrisponde alla parola originale.\\
+Gli n-gram che saranno sperimentati saranno i 2-gram, 3-gram, 4-gram dato che valori superiori sono molto predisposti a errori.\\
+Le soglie del coefficiente di Jaccard saranno invece 0.2,0.5 e 0.8.\\
 \section{Documentazione del codice}
+\begin{verbatim}
+edit_distance_matrix(x, y)
+\end{verbatim}
+Prende in input due stringhe e esegue l'algoritmo per trovare edit distance tra le due, restituisce le matrici che sono risultato dell'algoritmo.\\
+\begin{verbatim}
+edit_distance(x,y)
+\end{verbatim}
+Esegue edit distance tra x e y e restituisce solo la distanza tra le due.\\\\
+\begin{verbatim}
+get_ngram(word, n)
+\end{verbatim}
+Prende come parametro una parola e n, restituisce tutti gli n-gram della parola in una lista.\\
+\begin{verbatim}
+dictionary_ngram(dictionary, n)
+\end{verbatim}
+Prende come parametro una lista di parole e restituisce tutti gli n-gram di ogni parola nella lista originale.\\
+\begin{verbatim}
+get_jaccard_value(set1, set2)
+\end{verbatim}
+Prende due insiemi(liste) e restituisce il coefficiente di Jaccard tra esse.\\
+\begin{verbatim}
+closest_word(word, dictionary)
+\end{verbatim}
+Prende una parola e un dizionario. Restituisce la parola presente nel dizionario più vicina a quella passata controllando tutte le parole. Restituisce inoltre la distanza tra la parola trovata e quella passata.\\
+\begin{verbatim}
+closest_word_ngram_ed_jacc(word,n,n_grammed_dictionary, jaccard)
+\end{verbatim}
+Prende una parola,il dizionario contenente gli n-gram di tutte le parole e una soglia per il coefficiente di Jaccard.\\
+Calcola il coefficiente di Jaccard tra la parola e ogni parola nel dizionario, dopodichè esegue edit distance con le parole con coefficiente superiore alla soglia passata in ingresso e restituisce la parola più vicina tra queste.\\
+\begin{verbatim}
+closest_word_ngram_ed_1gram(word,n, n_grammed_dictonary)
+\end{verbatim}
+Prende una parola e il dizionario contenente gli n-gram di tutte le parole.\\
+Esegue edit distance con le parole che contengono almeno un n-gram in comune con la parola passata come parametro, restituisce poi quella più vicina.
 
+\begin{verbatim}
+mistype_word(word, n)
+\end{verbatim}
+Prende come parametro una parola e un numero di caratteri. Restituisce la parola dopo aver sostituito n caratteri in altri scelti casualmente.
+
+\begin{verbatim}
+mistype_list(words)
+\end{verbatim}
+Prende come parametro una lista di parole e cambia un numero casuale di lettere in ognuna di esse.\\ Questo numero è scelto in base alla dimensione della parola: se è lunga meno di 3 caratteri sarà cambiato 1 carattere, se è lunga da 4 a 5 ne saranno cambiati 1 o 2, se è lunga più di 6 ne saranno cambiati 1,2 o 3.\\
+\newpage
 \section{Risultati sperimentali}
 
 \section{Analisi e conclusioni}
