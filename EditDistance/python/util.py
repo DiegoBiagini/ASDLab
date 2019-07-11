@@ -44,13 +44,6 @@ def mistype_list(words):
     return out_list
 
 
-# Saves the list to a file
-def list_to_file(list, filename):
-    with open(filename, "w", encoding="utf8") as f:
-        for item in list:
-            print(item, file=f)
-
-
 # Returns a list of all lines in a file
 def file_to_list(filename):
     with open(filename, "r", encoding="utf8") as file:

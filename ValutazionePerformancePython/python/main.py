@@ -27,6 +27,7 @@ def main():
     plot_and_save("Insertion sort worst case", results)
 
     # Quick sort
+
     results = test_sorting(max_time, quick_sort, get_random_nodup, save, "data/quick_rand")
     print("Quicksort su array casuale:\n", results)
     plot_and_save("Quick sort casuale", results)

@@ -1,3 +1,4 @@
+import pickle
 from timeit import default_timer as timer
 
 from ngram import *
@@ -43,7 +44,8 @@ def main():
         if result[0] == word_query[0]:
             n_hit += 1
 
-    list_to_file(out_data, "data/out_simple_ed.txt")
+    with open("data/out_simple_ed.dat", "wb") as f:
+        pickle.dump(out_data, f)
     print("Simple edit distance\n Average time: ", sum(times) / n_words)
     print("Hit rate: ", n_hit / n_words, "\n\n")
 
@@ -71,7 +73,8 @@ def main():
                 if result[0] == word_query[0]:
                     n_hit += 1
 
-            list_to_file(out_data, "data/out_jacc_" + str(jacc) + "_" + str(n_gram) + "n.txt")
+            with open("data/out_jacc_" + str(jacc) + "_" + str(n_gram) + "n.dat", "wb") as f:
+                pickle.dump(out_data, f)
             print("Edit distance with jaccard >= " + str(jacc) +" and ngram of size " +str(n_gram))
             print("Average time: ", sum(times) / n_words)
             print("Hit rate: ", n_hit / n_words, "\n\n")
