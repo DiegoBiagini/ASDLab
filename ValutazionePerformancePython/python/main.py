@@ -1,3 +1,4 @@
+import pickle
 from timeit import default_timer as timer
 
 import matplotlib.pyplot as plt
@@ -18,7 +19,7 @@ def main():
     print("Insertion sort su array casuale:\n", results)
     plot_and_save("Insertion sort casuale", results)
 
-    results = test_sorting(60, insertion_sort, get_random_asc, save, "data/insertion_best")
+    results = test_sorting(20, insertion_sort, get_random_asc, save, "data/insertion_best")
     print("Insertion sort su array crescente(best case):\n", results)
     plot_and_save("Insertion sort best case", results)
 
@@ -41,7 +42,7 @@ def main():
     plot_and_save("Quick sort worst case", results)
 
     # Both
-    results = test_both(max_time)
+    results = test_both(max_time, save)
     print("Insertion sort e quicksort su stesso array:\n", results, save)
     plot_and_save_both("Insertion sort e Quicksort casuale",results)
 
@@ -67,7 +68,8 @@ def test_sorting(max_time, sorting_f, random_array_f, save_to_file, filename):
             current_size = next_size(current_size)
             rand_array = random_array_f(current_size)
             if save_to_file:
-                list_to_file(results, filename + "_" + str(current_size) + "_in.txt")
+                with open(filename + "_" + str(current_size) + "_in.dat","wb") as f:
+                    pickle.dump(results, f)
 
             sorting_time = timer()
             sorting_f(rand_array)
@@ -77,7 +79,8 @@ def test_sorting(max_time, sorting_f, random_array_f, save_to_file, filename):
     except RecursionError:
         pass
     if save_to_file:
-        list_to_file(results, filename + "_out.txt")
+        with open(filename + "_out.dat", "wb") as f:
+            pickle.dump(results, f)
     return results
 
 
@@ -95,7 +98,8 @@ def test_both(max_time, save_to_file):
             current_size = next_size(current_size)
             rand_array = get_random_nodup(current_size)
             if save_to_file:
-                list_to_file(results, "both_sort_" + str(current_size) + "_in.txt")
+                with open("data/both_sort_" + str(current_size) + "_in.dat", "wb") as f:
+                    pickle.dump(results, f)
 
             insertion_time = timer()
             insertion_sort(rand_array.copy())
@@ -111,7 +115,8 @@ def test_both(max_time, save_to_file):
     except RecursionError:
         pass
     if save_to_file:
-        list_to_file(results, "both_sort_out.txt")
+        with open("data/both_sort_out.dat", "wb") as f:
+            pickle.dump(results, f)
     return results
 
 
@@ -140,21 +145,6 @@ def plot_and_save_both(title, results):
 
     title = ''.join(x for x in title.title() if not x.isspace())
     plt.savefig("../plots/" + title + ".png")
-
-
-# Saves the list to a file
-def list_to_file(list, filename):
-    with open(filename, "w") as file:
-        file.writelines(["%s\n" % item for item in list])
-
-
-# Reads list from file
-def file_to_list(filename):
-    with open(filename) as file:
-        out_list = file.readlines()
-
-    # Remove \n
-    return [x.strip() for x in out_list]
 
 
 if __name__ == '__main__':

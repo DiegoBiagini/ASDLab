@@ -22,7 +22,8 @@ def main():
     mistyped_list = mistype_list(random_words)
     mistyped_list_spaces = [(" " + el[0] + " ", " " + el[1] + " ") for el in mistyped_list]
 
-    list_to_file(mistyped_list, "data/in_words.txt")
+    with open("data/in_words.dat", "wb") as f:
+        pickle.dump(mistyped_list, f)
     print("Written words to file")
 
     # SIMPLE EDIT DISTANCE
@@ -96,7 +97,9 @@ def main():
             if result[0] == word_query[0]:
                 n_hit += 1
 
-        list_to_file(out_data, "data/out_1gram_" + str(n_gram) + "n.txt")
+        with open("data/out_1gram_" + str(n_gram) + "n.dat", "wb") as f:
+            pickle.dump(out_data, f)
+
         print("Edit distance on words with at least 1 common ngram of size " + str(n_gram))
         print("Average time: ", sum(times) / n_words)
         print("Hit rate: ", n_hit / n_words, "\n\n")
