@@ -19,7 +19,7 @@ def main():
     print("Insertion sort su array casuale:\n", results)
     plot_and_save("Insertion sort casuale", results)
 
-    results = test_sorting(20, insertion_sort, get_random_asc, save, "data/insertion_best")
+    results = test_sorting(10, insertion_sort, get_random_asc, save, "data/insertion_best")
     print("Insertion sort su array crescente(best case):\n", results)
     plot_and_save("Insertion sort best case", results)
 
