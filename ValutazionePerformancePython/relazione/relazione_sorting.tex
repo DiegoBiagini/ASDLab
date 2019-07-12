@@ -1,6 +1,4 @@
 \documentclass[]{article}
-\author{Diego Biagini}
-\title{Valutazione prestazioni algoritmi di sorting}
 
 \usepackage[utf8]{inputenc}
 \usepackage[margin=3cm]{geometry}
@@ -15,9 +13,12 @@
 
 \graphicspath{{../plots/}}
 
+\author{Diego Biagini}
+\date{}
+\title{Valutazione prestazioni algoritmi di sorting}
+
 \begin{document}
 \maketitle
-\newpage
 \section{Introduzione}
 Una delle classi di problemi più studiate nel campo dell'informatica sono i problemi di ordinamento.
 Essi possono essere descritti nel seguente modo:\\ a partire da una sequenza di dati 
@@ -301,6 +302,6 @@ Quest'ultima cosa ci mostra graficamente come le costanti di quicksort omesse ne
 Apparentemente l'unico problema di quicksort è il caso peggiore,che non è raro che si verifichi. \'E possibile rimediare a questo problema implementando $randomized\mbox{-}quicksort(A)$ , con questa prima di chiamare l'algoritmo viene imposta una permutazione casuale ad A. In questo modo si può dire che il costo di randomized-quicksort è pari al costo medio di quicksort per ogni sequenza in ingresso.\\\\
 Infine esaminando il confronto diretto tra i due algoritmi è evidente la maggiore efficienza di quicksort, che arriva ad essere centinaia di volte più veloce di insertion sort.\\
 Un punto a favore di insertion sort può essere la maggior facilità di esecuzione su insiemi di dati veramente grandi, situazione in cui la natura ricorsiva di quicksort è uno svantaggio.\\\\
-In conclusione quicksort è l'algoritmo preferibile nella quasi totalità delle applicazioni, nonostante questo insertion sort ha comunque delle applicazioni reali.\\
+In conclusione quicksort è l'algoritmo preferibile nella quasi totalità delle applicazioni, nonostante questo insertion sort ha comunque degli usi reali.\\
 Un esempio può essere un insieme di dati dinamico, in cui vengono aggiunti spesso degli elementi che non modificano troppo la struttura dell'insieme. In un caso come questo abbiamo un insieme quasi sempre ordinato a meno di qualche elemento, caso in cui insertion sort ha un comportamento quasi lineare.
 \end{document}

@@ -1,6 +1,4 @@
 \documentclass[]{article}
-\author{Diego Biagini}
-\title{Edit distance}
 
 \usepackage[utf8]{inputenc}
 \usepackage[margin=3cm]{geometry}
@@ -8,12 +6,17 @@
 \usepackage{algorithm}
 \usepackage{graphicx}
 \usepackage{amsmath}
+\usepackage{caption}
+\captionsetup[table]{skip=10pt}
 \floatname{algorithm}{}
 
+\author{Diego Biagini}
+\title{Edit distance e ricerca della parola più vicina}
+\date{}
 
 \begin{document}
 \maketitle
-\newpage
+
 \section{Introduzione}
 Un'operazione che viene frequentemente eseguita in programmi di vario tipo è la seguente: data una parola sbagliata o incompleta, trovare la parola più vicina ad essa.\\
 Esistono numerosi approcci per risolvere questo problema, tutti si basano sul confronto della parola voluta con un dizionario delle parole possibili.\\
@@ -68,6 +71,12 @@ I modi di trovare la parola più vicina presi in considerazione sono i seguenti:
 Il dizionario usato contiene 95000 parole della lingua italiana compresi i nomi propri.\\
 I test saranno eseguiti su un insieme di parole sbagliate scelte a caso.\\
 Per ottenerlo saranno scelte un certo numero di parole dal dizionario, dopodichè modificheremo un numero casuale di caratteri in ognuna di esse.\\
+La scelta di quanti caratteri modificare sarà fatta casualmente ma con un criterio:
+\begin{itemize}
+\item se la parola è lunga 3 o meno caratteri sarà modificato 1 carattere
+\item se la lunghezza della parola è compresa tra 4 e 5 caratteri ne saranno modificati 1 o 2
+\item se la lunghezza della parola è maggiore di 5 saranno modificati 1,2 o 3 caratteri.
+\end{itemize}
 Nel calcolare gli n-gram di una parola saranno aggiunti all'inizio e alla fine di essa degli spazi, in questo modo si può distinguere se due parole iniziano o finiscono nello stesso modo.\\ 
 Eseguiremo poi i tre modi sopracitati sull'insieme delle parole sbagliate, verificando anche se la parola più vicina trovata corrisponde alla parola originale.\\
 Gli n-gram che saranno sperimentati saranno i 2-gram, 3-gram, 4-gram dato che valori superiori sono molto predisposti a errori.\\
@@ -125,9 +134,9 @@ Prende come parametro una parola e un numero di caratteri. Restituisce la parola
 mistype_list(words)
 \end{verbatim}
 Prende come parametro una lista di parole e cambia un numero casuale di lettere in ognuna di esse.\\ Questo numero è scelto in base alla dimensione della parola: se è lunga meno di 3 caratteri sarà cambiato 1 carattere, se è lunga da 4 a 5 ne saranno cambiati 1 o 2, se è lunga più di 6 ne saranno cambiati 1,2 o 3.\\
-\newpage
+
 \section{Risultati sperimentali}
-Esecuzione la procedura di edit distance su tutto il dizionario:\\
+Esecuzione della procedura di edit distance su tutto il dizionario:\\
 Tempo medio di esecuzione: 43.66 s\\
 Hit rate: 0.77
 \\
@@ -162,18 +171,18 @@ Hit rate: 0.77
 \hline
 \end{tabular}
 \end{table}
-
+\newpage
 \section{Analisi e conclusioni}
 La prima cosa che è possibile notare nell'analizzare i dati è la notevole velocità assunta da ricerche di parole più vicine attraverso una soglia del coefficiente di Jaccard.\\
-Questa è guadagnata a scapito dell'accuratezza dell'algoritmo, infatti con una soglia superiore allo 0.8 è quasi impossibile trovare esattamente la parola che stavamo cercando tra tutte le possibili, quindi è da escludere in un uso reale.\\
+Questa è guadagnata a scapito dell'accuratezza dell'algoritmo, infatti con una soglia superiore allo 0.8 è quasi impossibile trovare esattamente la parola che stavamo cercando tra tutte le possibili, quindi è da escludere in un uso reale.\\\\
 Altra cosa che è sicuramente da escludere è il semplice edit-distance con tutte le parole del dizionario, infatti con un tempo di esecuzione medio di 43 secondi è veramente difficile da usare, sia in applicazioni real time come suggerimenti di autocompletamento, sia in campi più lenienti come la correzione di documenti.\\
-Non guadagniamo nemmeno la certezza di trovare la parola esatta con questo metodo, ha sì un tasso di successo tra i più alti, però in parole in cui cambia solamente un carattere è possibile che due o più opzioni siano ugualmente probabili.\\
-Per esempio se la parola "casa" è diventata "casw" l'algoritmo dovrà scegliere tra le parole "casa" ,"caso" ,"case", "casi".\\
+Esso è il caso ottimo in fatto di accuratezza dato che vengono controllate tutte le parole, però non abbiamo comunque la certezza di trovare la parola esatta con questo metodo, infatti in parole in cui cambia solamente un carattere è possibile che due o più opzioni siano ugualmente probabili.\\
+Per esempio se la parola "casa" è diventata "casw" l'algoritmo dovrà scegliere tra le parole "casa" ,"caso" ,"case", "casi".\\\\
 Un comportamento simile lo ha anche il confronto con parole che condividono almeno un 2-gram, infatti ci saranno così tante parole che condividono almeno un 2-gram che il guadagno in termini di tempo di questo filtro non è abbastanza.
 Usando la ricerca tra almeno un 3-gram e 4-gram invece abbiamo un notevole aumento di velocità mantenendo un buon hit-rate, ma comunque non abbastanza per risposte immediate.\\
 Inoltre usare i 4-gram ha funzionato bene in questo caso, dato che delle parole scelte casualmente è facile che siano più lunghe del normale, se dovessimo correggere un documento con parole corte infatti avremmo sicuramente un hit rate più basso.\\
 Infine rimangono le ricerche su parole con un coefficiente di Jaccard superiore a 0.2 o 0.5.\\
-Aumentando la dimensione degli n-gram usati e la soglia si può vedere come i tempi di esecuzione e gli hit rate scendano.\\
+Aumentando la dimensione degli n-gram usati e la soglia si può vedere come i tempi di esecuzione e gli hit rate scendano.\\\\
 Il migliore compromesso che siamo in grado di trovare tra accuratezza e velocità sembra essere ricerca tra 3-gram con coefficiente di Jaccard superiore a 0.2, questo infatti ha un tempo medio di esecuzione minore di mezzo secondo e un hit rate del 63\%.\\
 Per applicazioni in cui è necessaria la massima accuratezza invece sembra più conveniente la ricerca tra 2-gram con coefficiente di Jaccard superiore a 0.2, questo con un tempo di poco più di un secondo offre un'accuratezza del 77\%, che può essere considerata quasi ottima se confrontata con l'edit distance su tutti gli elementi del dizionario.\\ 
 \end{document}

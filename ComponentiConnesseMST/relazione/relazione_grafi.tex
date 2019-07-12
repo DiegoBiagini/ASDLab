@@ -1,6 +1,7 @@
 \documentclass[]{article}
 \author{Diego Biagini}
-\title{Edit distance}
+\title{Componenti connesse di un grafo e \\alberi di connessione minimi}
+\date{}
 
 \usepackage[utf8]{inputenc}
 \usepackage[margin=3cm]{geometry}
@@ -17,7 +18,6 @@
 
 \begin{document}
 \maketitle
-\newpage
 \section{Introduzione}
 Il grafo è una struttura che ha numerose applicazioni sia nei campi dell'informatica sia in quelli dell'ottimizzazione.\\
 Alcuni tipi di operazioni possibili su di essi sono le visite e la ricerca di cammini, o insiemi di cammini, particolari.\\
@@ -222,7 +222,7 @@ Esegue la visita BFS sul grafo partendo dal nodo passato e restituisce il valore
 2                     & 2       & 1       & 2       & 1      & 1      \\
 4                     & 3       & 2       & 1       & 1      & 1      \\
 8                     & 4       & 1       & 1       & 1      & 1      \\
-16                    & 1       & 1       & 1       & 1      & 1      \\
+16                    & 1       & 2       & 1       & 1      & 1      \\
 32                    & 1       & 1       & 1       & 1      & 1      \\
 ...                   & ...     & ...     & ...     & ...    & ...    \\
 2048                  & 1       & 1       & 1       & 1      & 1      \\
@@ -231,57 +231,140 @@ Esegue la visita BFS sul grafo partendo dal nodo passato e restituisce il valore
 \end{tabular}
 \end{table}
 
+\begin{table}[H]
+\centering
+\caption{Tempo di esecuzione(s)}
+\label{tab:ccs_time}
+\begin{tabular}{|l|l|l|l|l|l|} 
+\cline{2-6}
+\multicolumn{1}{l|}{} & p = 0.2 & p = 0.4  & p = 0.6 & p= 0.8  & p = 1    \\ 
+\hline
+4                     & 0.00014 & 0.000092 & 0.00015 & 0.00010 & 0.00012  \\
+8                     & 0.00026 & 0.00028  & 0.00029 & 0.00030 & 0.00038  \\
+16                    & 0.00095 & 0.00086  & 0.00098 & 0.0011  & 0.0012   \\
+32                    & 0.0032  & 0.0035   & 0.0037  & 0.0041  & 0.0041   \\
+64                    & 0.012   & 0.014    & 0.014   & 0.015   & 0.016    \\
+128                   & 0.046   & 0.050    & 0.054   & 0.058   & 0.062    \\
+256                   & 0.18    & 0.22     & 0.22    & 0.24    & 0.25     \\
+512                   & 0.73    & 0.81     & 0.88    & 0.95    & 1.02     \\
+1024                  & 2.94    & 3.23     & 3.50    & 3.77    & 4.06     \\
+2048                  & 11.7    & 12.9     & 14.1    & 15.1    & 16.3     \\
+4096                  & 46.9    & 51.4     & 56.4    & 60.6    & 65.2     \\
+\hline
+\end{tabular}
+\end{table}
 
-\textbf{Tempo di esecuzione}\\
 \begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.45\linewidth} 
         \centering
         \includegraphics[width=\textwidth]{cc_time_p=02}
-        \label{fig:quick_casuale}
+        \label{fig:ccs_time_p=02}
     \end{subfigure}
     \quad
     \begin{subfigure}[b]{0.45\linewidth}
         \centering
         \includegraphics[width=\textwidth]{cc_time_p=08}
-        \label{fig:quick_best}
+        \label{fig:ccs_time_p=08}
     \end{subfigure}
 \end{figure}
-
+\newpage
 \subsection{MST}
-\textbf{Tempo di esecuzione}
+\textbf{Tempi di esecuzione}
+\begin{table}[H]
+\centering
+\caption{Tempo di esecuzione(s)}
+\label{tab:mst_time}
+\begin{tabular}{|l|l|l|l|l|l|} 
+\cline{2-6}
+\multicolumn{1}{l|}{} & p = 0.2 & p = 0.4 & p = 0.6 & p= 0.8 & p = 1   \\ 
+\hline
+16                    & 0.0016  & -       & 0.0020  & 0.0021 & 0.0024  \\
+32                    & 0.0061  & 0.0070  & 0.0099  & 0.0085 & 0.0092  \\
+64                    & 0.048   & 0.028   & 0.031   & 0.034  & 0.039   \\
+128                   & 0.096   & 0.11    & 0.14    & 0.14   & 0.17    \\
+256                   & 0.37    & 0.43    & 0.49    & 0.54   & 0.62    \\
+512                   & 1.53    & 1.76    & 2.03    & 2.26   & 2.47    \\
+1024                  & 6.17    & 7.14    & 8.09    & 9.03   & 10.1    \\
+2048                  & 24.8    & 28.7    & 32.7    & 36.6   & 40.4    \\
+4096                  & 99.5    & 115.4   & 132.5   & 148.1  & 164.4   \\
+\hline
+\end{tabular}
+\end{table}
+
 \begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.45\linewidth} 
         \centering
         \includegraphics[width=\textwidth]{krusk_time_p=02}
-        \label{fig:quick_casuale}
+        \label{fig:krusk_time_p=02}
     \end{subfigure}
     \quad
     \begin{subfigure}[b]{0.45\linewidth}
         \centering
         \includegraphics[width=\textwidth]{krusk_time_p=08}
-        \label{fig:quick_best}
+        \label{fig:krusk_time_p=08}
     \end{subfigure}
 \end{figure}
 
 \textbf{Peso MST}\\
+
+\begin{table}[H]
+\centering
+\caption{Peso}
+\label{tab:mst_weight}
+\begin{tabular}{|l|l|l|l|l|l|} 
+\cline{2-6}
+\multicolumn{1}{l|}{} & p = 0.2 & p = 0.4 & p = 0.6 & p= 0.8 & p = 1  \\ 
+\hline
+16                    & 55      & -       & 30      & 19     & 25     \\
+32                    & 64      & 42      & 41      & 31     & 32     \\
+64                    & 107     & 65      & 63      & 63     & 63     \\
+128                   & 134     & 129     & 127     & 127    & 127    \\
+256                   & 256     & 255     & 255     & 255    & 255    \\
+512                   & 511     & 511     & 511     & 511    & 511    \\
+1024                  & 1023    & 1023    & 1023    & 1023   & 1023   \\
+2048                  & 2047    & 2047    & 2047    & 2047   & 2047   \\
+4096                  & 4095    & 4095    & 4095    & 4095   & 4095   \\
+\hline
+\end{tabular}
+\end{table}
+
 \begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.45\linewidth} 
         \centering
         \includegraphics[width=\textwidth]{krusk_Weight_p=02}
-        \label{fig:quick_casuale}
+        \label{fig:krusk_Weight_p=02}
     \end{subfigure}
     \quad
     \begin{subfigure}[b]{0.45\linewidth}
         \centering
         \includegraphics[width=\textwidth]{krusk_Weight_p=08}
-        \label{fig:quick_best}
+        \label{fig:krusk_Weight_p=08}
     \end{subfigure}
 \end{figure}
 
 \textbf{Altezza MST}\\
+\begin{table}[H]
+\centering
+\caption{Altezza}
+\label{tab:mst_height}
+\begin{tabular}{|l|l|l|l|l|l|} 
+\cline{2-6}
+\multicolumn{1}{l|}{} & p = 0.2 & p = 0.4 & p = 0.6 & p= 0.8 & p = 1  \\ 
+\hline
+16                    & 5       & -       & 5       & 4      & 3      \\
+32                    & 8       & 7       & 7       & 6      & 5      \\
+64                    & 6       & 10      & 6       & 8      & 6      \\
+128                   & 12      & 9       & 6       & 8      & 8      \\
+256                   & 13      & 9       & 9       & 8      & 6      \\
+512                   & 13      & 10      & 10      & 8      & 8      \\
+1024                  & 14      & 10      & 10      & 8      & 8      \\
+\hline
+\end{tabular}
+\end{table}
+
 \begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.45\linewidth} 
@@ -296,14 +379,16 @@ Esegue la visita BFS sul grafo partendo dal nodo passato e restituisce il valore
         \label{fig:quick_best}
     \end{subfigure}
 \end{figure}
-
+\newpage
 \section{Analisi e conclusioni}
 Dagli esperimenti emerge che molto spesso nel grafo generato si ha una sola componente connessa.\\
 Questo è particolarmente vero quando il numero di vertici del grafo è superiore a 10-20, infatti anche se la probabilità di avere un collegamento tra due nodi è abbastanza bassa in qualche modo sarà generato un cammino che collega qualsiasi coppia di nodi, più o meno lungo.\\
-I tempi di esecuzione di questo algoritmo sono quelli attesi ovvero poco più che lineare rispetto al numero di archi, ovvero alla dimensione e alla probabilità di collegamento dei nodi.\\
+I tempi di esecuzione di questo algoritmo sono quelli attesi ovvero più che lineare rispetto al numero di archi, cioè alla dimensione e alla probabilità di collegamento dei nodi.\\
+\\
 Un comportamento molto simile lo ha anche il tempo di ricerca dell'MST, anche se le sue costanti sono più alte.\\
 Il peso totale dell'MST è lineare rispetto al numero di nodi,questo ha però un comportamento particolare al variare della probabilità di presenza di archi.\\
 Infatti da qualche centinaio di nodi in su e a parità del loro numero, nonostante due grafi siano più o meno popolati di archi(p diversi) il peso dei due MST è molto vicino, se non identico.\\
-Infine è possibile osservare come l'altezza dell'MST inizialmente aumenta con l'aumentare del numero di nodi, questo comportamento però si attenua su grafi di dimensioni maggiori dove l'altezza si inizia a stabilizzare attorno a 10.\\
+Infine è possibile osservare come l'altezza dell'MST inizialmente aumenta con l'aumentare del numero di nodi, questo comportamento però si attenua su grafi di dimensioni maggiori dove l'altezza si inizia a stabilizzare attorno a 10 o 8, a seconda di p.\\
+Ciò significa che anche aumentando notevolmente il numero di nodi la lunghezza dei cammini  tra qualsiasi coppia di nodi nell'MST resta ragionevole.\\
  
 \end{document}
