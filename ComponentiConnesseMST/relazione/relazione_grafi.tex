@@ -9,6 +9,9 @@
 \usepackage{graphicx}
 \usepackage{amsmath}
 \floatname{algorithm}{}
+\usepackage{caption, subcaption}
+    \captionsetup[sub]{labelformat=simple}
+    \renewcommand{\thesubfigure}{(\alph{subfigure})} % Style: 1(a), 1(b)
 \graphicspath{{../plots/}}
 
 
@@ -17,7 +20,7 @@
 \newpage
 \section{Introduzione}
 Il grafo è una struttura che ha numerose applicazioni sia nei campi dell'informatica sia in quelli dell'ottimizzazione.\\
-Alcuni tipi di operazioni possibili su di esse sono le visite e la ricerca di cammini, o insiemi di cammini, particolari.\\
+Alcuni tipi di operazioni possibili su di essi sono le visite e la ricerca di cammini, o insiemi di cammini, particolari.\\
 Gli esperimenti che saranno eseguiti serviranno a esaminare due tipi particolari di ricerche in un grafo: la ricerca delle componenti connesse e la ricerca dell'MST(minimum spanning tree), quest'ultima sarà effettuata attraverso l'uso dell'algoritmo di Kruskal.\\
 Ciò che ci interesserà scoprire maggiormente è il comportamento degli algoritmi per queste ricerche all'aumentare dei nodi del grafo.\\
 \'E necessario infatti che essi siano efficienti su grafi relativamente estesi date le applicazioni reali, un esempio per le componenti connesse è nell'analisi di immagini e quindi OCR, mentre la ricerca di un albero di connessione minimo è un classico problema che si presenta nelle telecomunicazioni.\\ 
@@ -31,7 +34,8 @@ Un grafo può essere individuato attraverso due insiemi:
 \item l'insieme degli archi $E$ ,ogni arco è indicato da una coppia di vertici
 \end{itemize}
 Un grafo si dice \textbf{non diretto} se $E$ è composto da coppie di vertici ordinate.\\
-Viene definito \textbf{cammino} di un grafo dal vertice $u$ a $u'$ una sequenza di vertici $<v_0, ... , v_k>$ tale che $v_0 = u,v_k=u'$ e $(v_i-1, v_i)$ è un arco presente in $E$ per $i = 2,..., k-1$. Se $v_0 = v_k$ e il cammino è formato da almeno un arco invece siamo in presenza di un \textbf{ciclo}
+Viene definito \textbf{cammino} di un grafo dal vertice $u$ a $u'$ una sequenza di vertici $<v_0, ... , v_k>$ tale che $v_0 = u,v_k=u'$ e $(v_i-1, v_i)$ è un arco presente in $E$ per $i = 2,..., k-1$.\\
+Se $v_0 = v_k$ e il cammino è formato da almeno un arco invece siamo in presenza di un \textbf{ciclo}
 \\\\
 \'E possibile memorizzare i grafi in diversi modi, due opzioni possibili sono le seguenti:
 \begin{itemize}
@@ -91,6 +95,7 @@ Tutti gli algoritmi per trovare l'MST di un grafo sono costruiti nel modo seguen
 \ENDWHILE
 \end{algorithmic}
 \end{algorithm}
+\\
 Per trovare un arco sicuro è utile il seguente teorema:\\
 Sia $G=(V,E)$ un grafo non orientato e connesso con un peso associato ad ogni arco. Sia A un sottoinsieme di E contenuto in un qualche MST per G. Sia $(S, V-S)$ un qualunque taglio che rispetta A. Allora se l'arco $(u,v)$ è un arco leggero che attraversa $(S, V-S)$ è un arco sicuro per A.\\\\
 Da questo è possibile arrivare a sviluppare l'algoritmo di Kruskal per la ricerca dell'albero di connessione minimo di un grafo:
@@ -111,22 +116,31 @@ Da questo è possibile arrivare a sviluppare l'algoritmo di Kruskal per la ricer
 \STATE Return $A$
 \end{algorithmic}
 \end{algorithm}
+\\
 Il tempo di esecuzione è dipendente dall'implementazione degli insiemi disgiunti.\\
 Abbiamo che il tempo per l'ordinamento è $O(Elg(E))$ e il numero di Union eseguite sarà $O(E)$.\\
-Usando una foresta di insiemi disgiunti sappiamo che il costo di $E$ Union è $O(E\alpha(E,V)$ che è un $O(Elg(E))$, quindi il costo totale dell'algoritmo di Kruskal è $O(Elg(E))$.
+Usando una foresta di insiemi disgiunti sappiamo che il costo di $E$ Union è $O(E\alpha(E,V))$ che è un $O(Elg(E))$, quindi il costo totale dell'algoritmo di Kruskal è $O(Elg(E))$.
 \section{Esperimenti svolti}
 Gli esperimenti fatti si occuperanno di analizzare le prestazioni dell'algoritmo per trovare le componenti connesse di un grafo e l'algoritmo di Kruskal.\\
 I grafi presi in considerazione saranno grafi pesati generati casualmente.\\
 La dimensione dei grafi generati sarà sempre crescente ed inoltre saranno testati vari modi di collegare i loro nodi.\\
-In particolare per ogni dimensione del grafo saranno generati 5 diversi grafi, in ognuno di essi la probabilità che un nodo sia collegato ad un altro sarà diversa.\\
-La crescita del numero di nodi sarà esponenziale, ad ogni ciclo sarà raddoppiata fino ad arrivare ad un massimo di $2^{15}$.\\
+In particolare per ogni dimensione del grafo saranno generati 5 diversi grafi, in ognuno di essi la probabilità che un nodo sia collegato ad un altro(p) sarà diversa.\\
+La crescita del numero di nodi sarà esponenziale, ad ogni ciclo sarà raddoppiata fino ad arrivare ad un massimo di $2^{12}$.\\
 Per ogni grafo generato prima di tutto verranno ricercate le componenti connesse e sarà registrato il tempo di esecuzione.\\
 Dopodichè se è stata trovata esattamente una componente connessa è possibile eseguire la ricerca dell'MST con l'algoritmo di Kruskal.\\
 Per questo sarà registrato il tempo di esecuzione e il peso totale dell'MST.\\
-Inoltre sotto una certa dimensione(numero nodi <= 4000 per motivi di tempo di esecuzione) sarà calcolata l'altezza dell'MST.\\
-Questo problema richiede una visita BFS per ogni nodo ed è quindi particolarmente lenta.\\
+Inoltre sotto una certa dimensione(numero nodi <= 2000 per motivi di tempo di esecuzione) sarà calcolata l'altezza dell'MST.\\
+Questo problema richiede una visita BFS per ogni nodo ed è quindi particolarmente lento.\\
+\\
+Gli esperimenti saranno condotti su una macchina con sistema operativo Linux Ubuntu 18.04, 6 GB di memoria ram, una cpu Intel Core i5(2.50 GHz / 3.10 GHz, 2 core).
 
 \section{Documentazione del codice}
+Il progetto è diviso in 3 file:
+\begin{itemize}
+\item main.py, contiene il programma di testing e salvataggio dati
+\item set.py, contiene l'implementazione degli insiemi disgiunti
+\item graph.py, contiene funzioni per generare grafi e le varie ricerche e visite
+\end{itemize}
 \begin{verbatim}
 Node:
 	value
@@ -193,62 +207,96 @@ Restituisce una lista di BFSNode che corrisponde allo stato del grafo dopo la vi
 BFS_max(graph, start)
 \end{verbatim}
 Esegue la visita BFS sul grafo partendo dal nodo passato e restituisce il valore massimo di BFSNode.d alla fine della ricerca, ovvero la distanza da start al nodo.\\
+\newpage
 \section{Risultati sperimentali}
-\subsection{Componenti connesse}
-\textbf{Numero di componenti connesse}
-\begin{verbatim}
-Size=1
-p=0.2 CCs:1	    p=0.4 CCs:1	    p=0.6 CCs:1	    p=0.8 CCs:1	    p=1  CCs:1
-Size=2 
-p=0.2 CCs:2     p=0.4 CCs:2	    p=0.6 CCs:1     p=0.8 CCs:1     p=1  CCs:1 
-Size=4
-p=0.2 CCs:3     p=0.4 CCs:3     p=0.6 CCs:1     p=0.8 CCs:1	    p=1  CCs:1 
-Size=8
-p=0.2 CCs:6     p=0.4 CCs:2	    p=0.6 CCs:1	    p=0.8 CCs:1     p=1  CCs:1 
-Size=16
-p=0.2 CCs:1     p=0.4 CCs:1	    p=0.6 CCs:1	    p=0.8 CCs:1	    p=1  CCs:1
-Size=32
-p=0.2 CCs:1	    p=0.4 CCs:1     p=0.6 CCs:1	    p=0.8 CCs:1	    p=1  CCs:1
-Size=64
-p=0.2 CCs:1	    p=0.4 CCs:1     p=0.6 CCs:1     p=0.8 CCs:1     p=1  CCs:1 
-Size=128
-p=0.2 CCs:1	    p=0.4 CCs:1	    p=0.6 CCs:1	    p=0.8 CCs:1	    p=1  CCs:1
-Size=256
-p=0.2 CCs:1	    p=0.4 CCs:1	    p=0.6 CCs:1	    p=0.8 CCs:1	    p=1  CCs:1
-Size=512
-p=0.2 CCs:1	    p=0.4 CCs:1	    p=0.6 CCs:1	    p=0.8 CCs:1	    p=1  CCs:1
-Size=1024
-p=0.2 CCs:1	    p=0.4 CCs:1	    p=0.6 CCs:1	    p=0.8 CCs:1	    p=1  CCs:1
-Size=2048
-p=0.2 CCs:1	    p=0.4 CCs:1	    p=0.6 CCs:1     p=0.8 CCs:1	    p=1  CCs:1
-Size=4096
-p=0.2 CCs:1	    p=0.4 CCs:1     p=0.6 CCs:1	    p=0.8 CCs:1	    p=1  CCs:1
-\end{verbatim}
-\textbf{Tempo di esecuzione}\\\\
-\includegraphics[scale=0.5]{cc_time_p=02.png}
-\includegraphics[scale=0.5]{cc_time_p=04.png}\\
-\includegraphics[scale=0.5]{cc_time_p=06.png}
-\includegraphics[scale=0.5]{cc_time_p=08.png}
-\includegraphics[scale=0.5]{cc_time_p=1.png}\\
-\subsection{MST}
+\subsection{Ricerca delle componenti connesse}
+
+\begin{table}[H]
+\centering
+\label{fig:ccs_n}
+\caption{Numero di componenti connesse}
+\begin{tabular}{|l|l|l|l|l|l|} 
+\cline{2-6}
+\multicolumn{1}{l|}{} & p = 0.2 & p = 0.4 & p = 0.6 & p= 0.8 & p = 1  \\ 
+\hline
+2                     & 2       & 1       & 2       & 1      & 1      \\
+4                     & 3       & 2       & 1       & 1      & 1      \\
+8                     & 4       & 1       & 1       & 1      & 1      \\
+16                    & 1       & 1       & 1       & 1      & 1      \\
+32                    & 1       & 1       & 1       & 1      & 1      \\
+...                   & ...     & ...     & ...     & ...    & ...    \\
+2048                  & 1       & 1       & 1       & 1      & 1      \\
+4096                  & 1       & 1       & 1       & 1      & 1      \\
+\hline
+\end{tabular}
+\end{table}
+
+
 \textbf{Tempo di esecuzione}\\
-\includegraphics[scale=0.5]{krusk_time_p=02.png}
-\includegraphics[scale=0.5]{krusk_time_p=04.png}\\
-\includegraphics[scale=0.5]{krusk_time_p=06.png}
-\includegraphics[scale=0.5]{krusk_time_p=08.png}
-\includegraphics[scale=0.5]{krusk_time_p=1.png}\\
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.45\linewidth} 
+        \centering
+        \includegraphics[width=\textwidth]{cc_time_p=02}
+        \label{fig:quick_casuale}
+    \end{subfigure}
+    \quad
+    \begin{subfigure}[b]{0.45\linewidth}
+        \centering
+        \includegraphics[width=\textwidth]{cc_time_p=08}
+        \label{fig:quick_best}
+    \end{subfigure}
+\end{figure}
+
+\subsection{MST}
+\textbf{Tempo di esecuzione}
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.45\linewidth} 
+        \centering
+        \includegraphics[width=\textwidth]{krusk_time_p=02}
+        \label{fig:quick_casuale}
+    \end{subfigure}
+    \quad
+    \begin{subfigure}[b]{0.45\linewidth}
+        \centering
+        \includegraphics[width=\textwidth]{krusk_time_p=08}
+        \label{fig:quick_best}
+    \end{subfigure}
+\end{figure}
+
 \textbf{Peso MST}\\
-\includegraphics[scale=0.5]{krusk_Weight_p=02.png}
-\includegraphics[scale=0.5]{krusk_Weight_p=04.png}\\
-\includegraphics[scale=0.5]{krusk_Weight_p=06.png}
-\includegraphics[scale=0.5]{krusk_Weight_p=08.png}
-\includegraphics[scale=0.5]{krusk_Weight_p=1.png}\\
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.45\linewidth} 
+        \centering
+        \includegraphics[width=\textwidth]{krusk_Weight_p=02}
+        \label{fig:quick_casuale}
+    \end{subfigure}
+    \quad
+    \begin{subfigure}[b]{0.45\linewidth}
+        \centering
+        \includegraphics[width=\textwidth]{krusk_Weight_p=08}
+        \label{fig:quick_best}
+    \end{subfigure}
+\end{figure}
+
 \textbf{Altezza MST}\\
-\includegraphics[scale=0.5]{krusk_height_p=02.png}
-\includegraphics[scale=0.5]{krusk_height_p=04.png}\\
-\includegraphics[scale=0.5]{krusk_height_p=06.png}
-\includegraphics[scale=0.5]{krusk_height_p=08.png}
-\includegraphics[scale=0.5]{krusk_height_p=1.png}\\
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.45\linewidth} 
+        \centering
+        \includegraphics[width=\textwidth]{krusk_height_p=02}
+        \label{fig:quick_casuale}
+    \end{subfigure}
+    \quad
+    \begin{subfigure}[b]{0.45\linewidth}
+        \centering
+        \includegraphics[width=\textwidth]{krusk_height_p=08}
+        \label{fig:quick_best}
+    \end{subfigure}
+\end{figure}
+
 \section{Analisi e conclusioni}
 Dagli esperimenti emerge che molto spesso nel grafo generato si ha una sola componente connessa.\\
 Questo è particolarmente vero quando il numero di vertici del grafo è superiore a 10-20, infatti anche se la probabilità di avere un collegamento tra due nodi è abbastanza bassa in qualche modo sarà generato un cammino che collega qualsiasi coppia di nodi, più o meno lungo.\\

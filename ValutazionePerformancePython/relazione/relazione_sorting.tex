@@ -122,6 +122,12 @@ Per prima cosa un algoritmo ricorsivo come quicksort in realtà non può richiam
 Con il caso migliore dell'insertion sort sorge invece un altro problema, data la sua velocità di esecuzione veramente alta ben presto la memoria del calcolatore verrà pienata a forza di aumentare le dimensioni dell'array. Quindi per questo esperimento sarà stabilitò un tempo di esecuzione massimo molto inferiore rispetto agli altri.\\
 Gli esperimenti saranno condotti su una macchina con sistema operativo Linux Ubuntu 18.04, 6 GB di memoria ram, una cpu Intel Core i5(2.50 GHz / 3.10 GHz, 2 core).
 \section{Documentazione del codice}
+Il progetto è diviso in 3 file:
+\begin{itemize}
+\item main.py, contiene il programma di testing e di salvataggio dei dati e dei grafici
+\item randomarrays.py, contiene le funzioni che generano insiemi di vario tipo
+\item sorting.py, contiene gli algoritmi di ordinamento
+\end{itemize}
 \begin{verbatim}
 insertion_sort(array)
 
@@ -190,6 +196,7 @@ Tracciano il grafo dimensione-tempo voluto e lo salvano su file.
 
 \begin{table}[H]
 \centering
+\caption{Tempo di esecuzione Insertion sort(s)}
 \label{tab:insertion}
 \begin{tabular}{|l|l|l|l|} 
 \hline
@@ -233,6 +240,7 @@ Size     & Casuale & Best case & ~Worst case  \\
 
 \begin{table}[H]
 \centering
+\caption{Tempo di esecuzione Quicksort(s)}
 \label{tab:quick}
 \begin{tabular}{|l|l|l|l|} 
 \hline
@@ -263,6 +271,7 @@ Size     & Casuale & Best case & ~Worst case  \\
 \end{figure}
 
 \begin{table}[H]
+\caption{Tempo di esecuzione Quicksort e Insertion sort(s)}
 \label{tab:insertion_quick}
 \centering
 \begin{tabular}{|l|l|l|} 
