@@ -7,6 +7,10 @@
 \usepackage{algorithmic}
 \usepackage{algorithm}
 \usepackage{graphicx}
+\usepackage{float}
+\usepackage{caption, subcaption}
+    \captionsetup[sub]{labelformat=simple}
+    \renewcommand{\thesubfigure}{(\alph{subfigure})} % Style: 1(a), 1(b)
 \floatname{algorithm}{}
 
 \graphicspath{{../plots/}}
@@ -17,9 +21,9 @@
 \section{Introduzione}
 Una delle classi di problemi più studiate nel campo dell'informatica sono i problemi di ordinamento.
 Essi possono essere descritti nel seguente modo:\\ a partire da una sequenza di dati 
-$S = \{x_1, ... , x_n\}$ in ingresso trovare una permutazione $S^{\prime} = \{x_1^{\prime}, ... , x_n^{\prime}\}$ di essa tale che $x_1^{\prime} \leq x_2^{\prime} \leq ... \leq x_n{\prime}$.\\
+$S = \{x_1, ... , x_n\}$ in ingresso trovare una permutazione $S^{\prime} = \{x_1^{\prime}, ... , x_n^{\prime}\}$ di essa tale che $x_1^{\prime} \leq x_2^{\prime} \leq ... \leq x_n^\prime$.\\
 Per la loro risoluzione sono stati pensati numerosi algoritmi di ordinamento,questi differiscono soprattutto per i campi di applicazione e per il comportamento rispetto a certe sequenze di ingresso.\\
-Per valutare quale sia meglio usare è quindi necessario vedere quanto sono efficienti, ovvero quanto tempo impiegano ad essere eseguiti, rispetto a insiemi di dati particolari e con dimensione sempre crescente.\\
+Per valutare quale sia meglio usare è quindi necessario valutare la loro efficienza, ovvero quanto tempo impiegano ad essere eseguiti su insiemi di dati particolari e con dimensione sempre crescente.\\
 Gli algoritmi che saranno presi in esame sono \textbf{Insertion sort} e \textbf{Quicksort}.
 
 
@@ -36,7 +40,7 @@ I parametri che di norma vengono presi in considerazione per valutare l'efficien
 \\
 Nel caso di algoritmi il cui scopo è analizzare e modificare grandi quantità di dati, come quelli di ordinamento, c'è bisogno di vedere come questi parametri si comportano all'aumentare della quantità di dati presi in esame.\\
 Per far questo viene usata la \textbf{notazione asintotica}, attraverso essa siamo in grado di descrivere un limite stretto($\Theta$),superiore($O$) o inferiore($\Omega$) di una funzione al tendere di uno dei suoi parametri all'infinito.\\
-Per esempio $f(n) = \Theta(n^2)$ indica che $f$ si comporta come una parabola quando n( il numero di elementi da ordinare nel nostro caso) tende ad infinito, non ci preoccupiamo dei termini di primo o secondo grado.
+Per esempio $f(n) = \Theta(n^2)$ indica che $f$ si comporta come una parabola quando n( il numero di elementi da ordinare nel nostro caso) tende ad infinito, non ci preoccupiamo dei termini di primo grado e costanti dato che essi sono irrilevanti rispetto al grado maggiore.
 
 \newpage
 \subsection{Insertion sort}
@@ -62,7 +66,7 @@ La correttezza dell'algoritmo può essere dimostrata con la sua invariante di ci
 E' facile verificare che il caso migliore di questo algoritmo si ha quando l'array dato è già ordinato, infatti in questo caso non entreremo mai nel ciclo while interno.\\
 Da questo possiamo dire che nel \textbf{caso migliore} insertion sort è un $\Theta(n)$.\\
 Il \textbf{caso peggiore} si ha invece quando l'array è ordinato in senso decrescente, in questo caso il ciclo while controllerà tutti i valori precedenti a j e il tempo di esecuzione asintotico è $\Theta(n^2)$.\\
-Il caso medio ha un comportamento simile al caso peggiore,infatti mediamente metà elementi di $A[1 ... j-1]$ sono più piccoli di $A[j]$, nonostante questo abbiamo sempre un comportamento quadratico e possiamo dire che anche nel \textbf{caso medio} insertion sort è un $\Theta(n^2)$
+Il caso medio ha un comportamento simile al caso peggiore,infatti mediamente metà elementi di $A[1 ... j-1]$ sono più piccoli di $A[j]$. Nonostante questo abbiamo sempre un comportamento quadratico e possiamo dire che anche nel \textbf{caso medio} insertion sort è un $\Theta(n^2)$
 \subsection{Quicksort}
 Quicksort è un algoritmo di ordinamento ricorsivo che segue la filosofia divide-et-impera.\\
 \'E uno degli algoritmi più usati in virtù delle buone prestazioni che offre quando è eseguito su insiemi di elementi senza un particolare ordine preesistente.\\
@@ -96,11 +100,11 @@ Lo pseudocodice dell'algoritmo è il seguente:
 \end{algorithm}
 
 Il \textbf{caso migliore} di quicksort si ha quando ad ogni chiamata di partition q si trova esattamente nel mezzo dell'array. In questo caso quicksort ha un comportamento simile a merge sort ed ha un tempo di esecuzione asintotico di $\Theta(nlog(n))$.\\
-Il \textbf{caso peggiore} si ha invece quando l'array è già ordinato(caso molto comune) e la divisione dell'array tramite il partition è la peggiore possibile. Il tempo è $\Theta(n^2)$.\\
-\'E possibile rimediare questo problema imponendo un ordinamento casuale dell'array in ingresso.\\
+Il \textbf{caso peggiore} si ha invece quando l'array è già ordinato(caso piuttosto comune) e la divisione dell'array tramite il partition è la peggiore possibile. Il tempo è $\Theta(n^2)$.\\
+\'E possibile rimediare questo problema imponendo un ordinamento casuale all'insieme in ingresso.\\
 Il motivo per cui quicksort è usato frequentemente è il suo comportamento nel \textbf{caso medio}, infatti è possibile dimostrare che esso si avvicina più al suo caso migliore piuttosto che al peggiore e quindi ha un tempo di esecuzione di $\Theta(nlog(n))$.\\
 \section{Esperimenti svolti}
-Vogliamo testare come gli algoritmi insertion sort e quicksort si comportano all'aumentare della dimensione dei dati da ordinare e sotto certi input, ovvero quanto tempo impiegano per essere eseguiti.\\
+Vogliamo testare come gli algoritmi insertion sort e quicksort si comportano all'aumentare della dimensione dei dati da ordinare e sotto certi input, più precisamente quanto tempo impiegano per essere eseguiti.\\
 Per questo, entrambi gli algoritmi saranno eseguiti su insiemi:
 \begin{itemize}
 \item casuali
@@ -110,12 +114,13 @@ Per questo, entrambi gli algoritmi saranno eseguiti su insiemi:
 
 La dimensione degli insiemi da ordinare sarà incrementata esponenzialmente.\\
 Iniziamo quindi ordinando un certo tipo di insieme di dimensione pari a 1 con un algoritmo, continuiamo quindi a generare nuovi insiemi di quel tipo di dimensione doppia finchè l'algoritmo non impiega più di qualche minuto(indicativamente 3 minuti) per terminare l'ordinamento.\\
-\'E stato scelto di raddoppiare la dimensione degli insiemi dopo ogni test, piuttosto che moltiplicarla per 10, in modo che il tempo di esecuzione tra un test e il successivo non sia troppo diverso.\\
+\'E stato scelto di raddoppiare la dimensione degli insiemi dopo ogni test, piuttosto che moltiplicarla per 10 in modo che il tempo di esecuzione tra un test e il successivo non sia troppo diverso.\\
 Questo comportamento si noterebbe soprattutto nel caso peggiore di insertion sort, una decuplicazione della dimensione comporta infatti un tempo di esecuzione(teorico) cento volte superiore al precedente.\\
 Infine la procedura di testing sarà eseguita sullo stesso insieme di dati(con permutazione casuale) per entrambi gli algoritmi, in modo da vedere effettivamente quale è più performante su uno stesso problema.\\\\
 Dato che questi esperimenti saranno eseguiti su una macchina reale sarà necessario imporre alcune limitazioni.\\
 Per prima cosa un algoritmo ricorsivo come quicksort in realtà non può richiamarsi all'infinito nella realtà, deve sottostare alla dimensione massima dello stack delle chiamate. Quindi gli esperimenti su questo algoritmo saranno interrotti nel caso in cui non sia possibile richiamare ulteriormente la funzione.\\
-Con il caso migliore dell'insertion sort sorge invece un altro problema, data la sua velocità di esecuzione veramente alta ben presto la memoria del calcolatore verrà pienata a forza di aumentare le dimensioni dell'array. Quindi per questo esperimento sarà stabilitò un tempo di esecuzione massimo inferiore rispetto agli altri.\\
+Con il caso migliore dell'insertion sort sorge invece un altro problema, data la sua velocità di esecuzione veramente alta ben presto la memoria del calcolatore verrà pienata a forza di aumentare le dimensioni dell'array. Quindi per questo esperimento sarà stabilitò un tempo di esecuzione massimo molto inferiore rispetto agli altri.\\
+Gli esperimenti saranno condotti su una macchina con sistema operativo Linux Ubuntu 18.04, 6 GB di memoria ram, una cpu Intel Core i5(2.50 GHz / 3.10 GHz, 2 core).
 \section{Documentazione del codice}
 \begin{verbatim}
 insertion_sort(array)
@@ -149,7 +154,7 @@ test_sorting(max_time, sorting_f, random_array_f, save_to_file, filename)
 \end{verbatim}
 Si occupa di testare un algoritmo di sorting.\\
 Prende come parametri il tempo massimo di esecuzione, la funzione che implementa l'algoritmo da testare, la funzione che genera l'array del tipo voluto. Consente inoltre di salvare i risultati su file se save\_to\_file è impostato a True.\\
-Restituisce una lista di tuple, ogni tupla  composta dalla dimensione testata e dal tempo di esecuzione per la data dimensione.
+Restituisce una lista di tuple, ogni tupla è composta dalla dimensione testata e dal tempo di esecuzione per la data dimensione.
 \begin{verbatim}
 test_both(max_time,save_to_file)
 \end{verbatim}
@@ -161,31 +166,130 @@ plot_and_save_both(title, results)
 Tracciano il grafo dimensione-tempo voluto e lo salvano su file.
 \section{Risultati sperimentali}
 \subsection{Insertion sort}
-\begin{center}
-\includegraphics[scale=0.5]{InsertionSortCasuale}\\
-\includegraphics[scale=0.5]{InsertionSortBestCase}\\
-\includegraphics[scale=0.5]{InsertionSortWorstCase}\\
-\end{center}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.4\linewidth} 
+        \centering
+        \includegraphics[width=\textwidth]{InsertionSortCasuale}
+        \label{fig:insertion_casuale}
+    \end{subfigure}
+    \quad
+    \begin{subfigure}[b]{0.4\linewidth}
+        \centering
+        \includegraphics[width=\textwidth]{InsertionSortBestCase}
+        \label{fig:insertion_best}
+    \end{subfigure}
+    \\
+    \begin{subfigure}[b]{0.4\linewidth}
+        \centering
+        \includegraphics[width=\textwidth]{InsertionSortWorstCase}
+        \label{fig:insertion_worst}
+    \end{subfigure}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\label{tab:insertion}
+\begin{tabular}{|l|l|l|l|} 
+\hline
+Size     & Casuale & Best case & ~Worst case  \\ 
+\hline
+1024     & 0.044   & 0.0002    & 0.088        \\
+2048     & 0.17    & 0.0004    & 0.35         \\
+4096     & 0.72    & 0.0008    & 1.39         \\
+8192     & 2.82    & 0.0015    & 5.63         \\
+16384    & 11.34   & 0.0031    & 22.55        \\
+32768    & 45.5    & 0.0062    & 90.2         \\
+65536    & 181.7   & 0.013     & 381.9        \\
+...      & ...     & ...       & ...          \\
+67108864 & -       & 12.66     & -            \\
+\hline
+\end{tabular}
+\end{table}
+
 
 \subsection{Quicksort}
-\begin{center}
-\includegraphics[scale=0.5]{QuickSortCasuale}\\
-\includegraphics[scale=0.5]{QuickSortBestCase}\\
-\includegraphics[scale=0.5]{QuickSortWorstCase}\\
-\end{center}
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.4\linewidth} 
+        \centering
+        \includegraphics[width=\textwidth]{QuickSortCasuale}
+        \label{fig:quick_casuale}
+    \end{subfigure}
+    \quad
+    \begin{subfigure}[b]{0.4\linewidth}
+        \centering
+        \includegraphics[width=\textwidth]{QuickSortBestCase}
+        \label{fig:quick_best}
+    \end{subfigure}
+    \newpage
+    \begin{subfigure}[b]{0.4\linewidth}
+        \centering
+        \includegraphics[width=\textwidth]{QuickSortWorstCase}
+        \label{fig:quick_worst}
+    \end{subfigure}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\label{tab:quick}
+\begin{tabular}{|l|l|l|l|} 
+\hline
+Size     & Casuale & Best case & ~Worst case  \\ 
+\hline
+4096     & 0.010   & 0.0073    & 1.39         \\
+8192     & 0.024   & 0.016     & 5.60         \\
+16384    & 0.054   & 0.033     & 22.5         \\
+32768    & 0.096   & 0.079     & 96.2         \\
+65536    & 0.21    & 0.15      & 362.2        \\
+...      & ...     & ...       & ...          \\
+524288   & 2.21    & 1.43      & -            \\
+1048576  & 4.51    & 3.02      & -            \\
+2097152  & 10.1    & 6.24      & -            \\
+4194304  & 21.9    & 13.1      & -            \\
+8388608  & 47.1    & 27.3      & -            \\
+16777216 & 99.5    & 56.9      & -            \\
+33554432 & 213.7   & 117.8     & -            \\
+\hline
+\end{tabular}
+\end{table}
 
 \subsection{Entrambi gli algoritmi}
-\begin{center}
-\includegraphics[scale=0.5]{InsertionSortEQuicksortCasuale}\\
-\end{center}
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.5\textwidth]{InsertionSortEQuicksortCasuale}
+	\label{fig:insertion_quick}
+\end{figure}
+
+\begin{table}[H]
+\label{tab:insertion_quick}
+\centering
+\begin{tabular}{|l|l|l|} 
+\hline
+Size  & Insertion sort & Quick sort  \\ 
+\hline
+128   & 0.00061        & 0.00018     \\
+256   & 0.0026         & 0.00048     \\
+512   & 0.010          & 0.00099     \\
+1024  & 0.045          & 0.0021      \\
+2048  & 0.19           & 0.0044      \\
+4096  & 0.77           & 0.011       \\
+8192  & 2.85           & 0.024       \\
+16384 & 11.9           & 0.048       \\
+32768 & 46.2           & 0.099       \\
+65536 & 199.8          & 0.22        \\
+\hline
+\end{tabular}
+\end{table}
 
 \section{Analisi e conclusioni}
 Analizzando i risultati degli esperimenti è possibile verificare ciò che ci dice la teoria.\\\\
-Riguardo insertion sort, grazie ai grafici tracciati, possiamo vedere come il caso medio e peggiore si avvicinano a delle parabole, mentre il caso migliore è una retta quasi perfetta che riesce ad "ordinare" insiemi di dati veramente velocemente.\\
+Riguardo insertion sort, grazie ai grafici tracciati, possiamo notare come il caso medio e peggiore si avvicinano a delle parabole, mentre il caso migliore è una retta quasi perfetta che riesce ad "ordinare" insiemi di dati veramente velocemente.\\
 Nonostante questo,il caso migliore è un caso così particolare(array già ordinato) che non capita molto frequentemente nei problemi di ordinamento classici, non possiamo quindi considerarlo veramente un punto forte dell'algoritmo in applicazioni generiche.\\\\
 Dai grafici di quicksort possiamo invece vedere come il caso peggiore sia una parabola, comparabile col caso medio e peggiore di insertion sort, mentre il caso medio e migliore si avvicinano a una retta, nonostante la teoria ci dica che il costo asintotico è $\Theta(nlog(n))$.\\
 Quest'ultima cosa ci mostra graficamente come le costanti di quicksort omesse nella notazione asintotica sono veramente piccole, quasi da far apparire il tempo di esecuzione come lineare.\\
-Apparentemente l'unico problema di quicksort è il caso peggiore,che è un caso che si può verificare facilmente. \'E possibile rimediare a questo problema implementando $randomized\mbox{-}quicksort(A)$ , questa prima di chiamare l'algoritmo impone una permutazione casuale ad A. In questo modo si può dire che il costo di randomized-quicksort è pari al costo medio di quicksort per ogni sequenza in ingresso.\\\\
+Apparentemente l'unico problema di quicksort è il caso peggiore,che non è raro che si verifichi. \'E possibile rimediare a questo problema implementando $randomized\mbox{-}quicksort(A)$ , con questa prima di chiamare l'algoritmo viene imposta una permutazione casuale ad A. In questo modo si può dire che il costo di randomized-quicksort è pari al costo medio di quicksort per ogni sequenza in ingresso.\\\\
 Infine esaminando il confronto diretto tra i due algoritmi è evidente la maggiore efficienza di quicksort, che arriva ad essere centinaia di volte più veloce di insertion sort.\\
 Un punto a favore di insertion sort può essere la maggior facilità di esecuzione su insiemi di dati veramente grandi, situazione in cui la natura ricorsiva di quicksort è uno svantaggio.\\\\
 In conclusione quicksort è l'algoritmo preferibile nella quasi totalità delle applicazioni, nonostante questo insertion sort ha comunque delle applicazioni reali.\\

@@ -15,10 +15,10 @@
 \maketitle
 \newpage
 \section{Introduzione}
-Un'operazione che viene frequentemente eseguita in programmi di vario tipo è ,data una parola sbagliata oppure incompleta, trovare la parola più vicina ad essa.\\
-Esistono numerosi approcci per risolvere questo problema, tutti questi si basano sul confronto della parola voluta con un dizionario delle parole possibili.\\
+Un'operazione che viene frequentemente eseguita in programmi di vario tipo è la seguente: data una parola sbagliata o incompleta, trovare la parola più vicina ad essa.\\
+Esistono numerosi approcci per risolvere questo problema, tutti si basano sul confronto della parola voluta con un dizionario delle parole possibili.\\
 Tra queste parole è possibile trovare quella più vicina attraverso la cosiddetta edit-distance, distanza di editing, più questa è piccola più le parole sono simili tra loro.\\
-Eseguire questa operazione per ogni parola possibile non è molto raccomandabile dato il grande numero di parole in un dizionario.\\
+Eseguire questa operazione per ogni parola possibile non è molto raccomandabile data la mole di un dizionario.\\
 Inoltre la ricerca della parola più vicina viene usata molto spesso in applicazioni real time, come suggerimenti di autocompletamento, è quindi necessario che abbia buoni tempi di esecuzione, anche minori di un secondo.\\
 Per raggiungere questo obiettivo è necessario diminuire il numero di parole con cui eseguiremo edit-distance, garantendo però che la parola più vicina sia considerata tra questi confronti.\\
 \section{Cenni teorici}
@@ -52,13 +52,13 @@ Usando questo approccio e salvando in una tabella i costi dei sottoproblemi, avr
 \subsection{Intersezione di n-gram}
 Data una sequenza di caratteri e un valore n è possibile definire un n-gram della sequenza come una sua sottosequenza di n elementi.\\
 Per esempio i 3-gram della parola "parola" sono: "par","aro","rol","ola".\\
-Un utilizzo degli n-gram è quello di controllare se due parole sono relativamente vicine tra loro, infatti siamo sicuri che se tra due parole non si hanno n-gram in comune allora difficilmente sono simili.\\\\
+Un utilizzo degli n-gram è quello di controllare se due parole sono relativamente vicine tra loro. Infatti siamo sicuri che se tra due parole non si hanno n-gram in comune allora difficilmente sono simili.\\\\
 \'E possibile quantificare questa somiglianza attraverso il \textbf{coefficiente di Jaccard}.\\
 Dati due insiemi $X$ e $Y$ il coefficiente di Jaccard fra i due è: $JC=\frac{\lvert X\cap Y \rvert}{\lvert X\cup Y \rvert}$\\
 Se i due insiemi coincidono allora il coefficiente di Jaccard è pari ad 1.
 \section{Esperimenti svolti}
 Ciò che ci interessa verificare è quale modo di trovare la parola più vicina ad una query Q è migliore.\\
-In questo controllo ci sarà bisogno di tenere conto del tempo impiegato nella ricerca e se il risultato della ricerca è quello giusto.\\
+In questo controllo sarà necessario tenere conto del tempo impiegato nella ricerca e se il risultato della ricerca è quello giusto.\\
 I modi di trovare la parola più vicina presi in considerazione sono i seguenti:\\
 \begin{itemize}
 \item eseguire edit distance tra Q e tutte le parole nel dizionario, restituiamo quindi quella con distanza minore
@@ -71,8 +71,16 @@ Per ottenerlo saranno scelte un certo numero di parole dal dizionario, dopodich�
 Nel calcolare gli n-gram di una parola saranno aggiunti all'inizio e alla fine di essa degli spazi, in questo modo si può distinguere se due parole iniziano o finiscono nello stesso modo.\\ 
 Eseguiremo poi i tre modi sopracitati sull'insieme delle parole sbagliate, verificando anche se la parola più vicina trovata corrisponde alla parola originale.\\
 Gli n-gram che saranno sperimentati saranno i 2-gram, 3-gram, 4-gram dato che valori superiori sono molto predisposti a errori.\\
-Le soglie del coefficiente di Jaccard saranno invece 0.2,0.5 e 0.8.\\
+Le soglie del coefficiente di Jaccard saranno invece 0.2,0.5 e 0.8.\\\\
+Gli esperimenti saranno condotti su una macchina con sistema operativo Linux Ubuntu 18.04, 6 GB di memoria ram, una cpu Intel Core i5(2.50 GHz / 3.10 GHz, 2 core).
 \section{Documentazione del codice}
+Il progetto è diviso in 4 file:
+\begin{itemize}
+\item main.py contiene il programma di testing
+\item editdistance.py contiene le funzioni per calcolare l'edit distance
+\item ngram.py contiene le funzioni per ottenere ngram di una parola o di un dizionario e per trovare la parola più vicina usando metodi con ngram
+\item util.py contiene funzioni varie come il calcolo del coefficiente di Jaccard o di modifica di stringhe
+\end{itemize}
 \begin{verbatim}
 edit_distance_matrix(x, y)
 \end{verbatim}
@@ -80,7 +88,7 @@ Prende in input due stringhe e esegue l'algoritmo per trovare edit distance tra 
 \begin{verbatim}
 edit_distance(x,y)
 \end{verbatim}
-Esegue edit distance tra x e y e restituisce solo la distanza tra le due.\\\\
+Esegue edit distance tra x e y e restituisce solo la distanza tra le due.\\
 \begin{verbatim}
 get_ngram(word, n)
 \end{verbatim}
@@ -111,7 +119,7 @@ Esegue edit distance con le parole che contengono almeno un n-gram in comune con
 \begin{verbatim}
 mistype_word(word, n)
 \end{verbatim}
-Prende come parametro una parola e un numero di caratteri. Restituisce la parola dopo aver sostituito n caratteri in altri scelti casualmente.
+Prende come parametro una parola e un numero di caratteri. Restituisce la parola dopo aver sostituito n caratteri con altri scelti casualmente.
 
 \begin{verbatim}
 mistype_list(words)
@@ -119,80 +127,49 @@ mistype_list(words)
 Prende come parametro una lista di parole e cambia un numero casuale di lettere in ognuna di esse.\\ Questo numero è scelto in base alla dimensione della parola: se è lunga meno di 3 caratteri sarà cambiato 1 carattere, se è lunga da 4 a 5 ne saranno cambiati 1 o 2, se è lunga più di 6 ne saranno cambiati 1,2 o 3.\\
 \newpage
 \section{Risultati sperimentali}
-\begin{verbatim}
-Simple edit distance
- Average time:  43.659344262810066
-Hit rate:  0.77 
+Esecuzione la procedura di edit distance su tutto il dizionario:\\
+Tempo medio di esecuzione: 43.66 s\\
+Hit rate: 0.77
+\\
+\begin{table}[H]
+\centering
+\label{tab:avg_time}
+\caption{Tempo medio di esecuzione(s)}
+\begin{tabular}{|l|l|l|l|l|} 
+\cline{2-5}
+\multicolumn{1}{l|}{} & \begin{tabular}[c]{@{}l@{}}Almeno un\\n-gram\end{tabular} & \begin{tabular}[c]{@{}l@{}}Coefficiente di\\Jaccard \textbackslash{}geq 0.2\end{tabular} & \begin{tabular}[c]{@{}l@{}}Coefficiente di\\Jaccard \textbackslash{}geq 0.5\end{tabular} & \begin{tabular}[c]{@{}l@{}}Coefficiente di \\Jaccard \textbackslash{}geq 0.8\end{tabular}  \\ 
+\hline
+2-gram                & 35.37                                                     & 1.199                                                                                    & 0.372                                                                                    & 0.368                                                                                      \\
+3-gram                & 5.65                                                      & 0.411                                                                                    & 0.324                                                                                    & 0.322                                                                                      \\
+4-gram                & 1.49                                                      & 0.316                                                                                    & 0.281                                                                                    & 0.281                                                                                      \\
+\hline
+\end{tabular}
+\end{table}
 
+\begin{table}[H]
+\centering
+\caption{Hit rate}
+\label{tab:hit_rate}
+\begin{tabular}{|l|l|l|l|l|} 
+\cline{2-5}
+\multicolumn{1}{l|}{} & \begin{tabular}[c]{@{}l@{}}Almeno un\\n-gram\end{tabular} & \begin{tabular}[c]{@{}l@{}}Coefficiente di\\Jaccard \textbackslash{}geq 0.2\end{tabular} & \begin{tabular}[c]{@{}l@{}}Coefficiente di\\Jaccard \textbackslash{}geq 0.5\end{tabular} & \begin{tabular}[c]{@{}l@{}}Coefficiente di \\Jaccard \textbackslash{}geq 0.8\end{tabular}  \\ 
+\hline
+2-gram                & 0.77                                                      & 0.75                                                                                     & 0.43                                                                                     & 0.06                                                                                       \\
+3-gram                & 0.77                                                      & 0.63                                                                                     & 0.31                                                                                     & 0.04                                                                                       \\
+4-gram                & 0.71                                                      & 0.55                                                                                     & 0.14                                                                                     & 0.04                                                                                       \\
+\hline
+\end{tabular}
+\end{table}
 
-Edit distance with jaccard >= 0.2 and ngram of size 2
-Average time:  1.1990059537899833
-Hit rate:  0.75 
-
-
-Edit distance with jaccard >= 0.5 and ngram of size 2
-Average time:  0.37171059009009694
-Hit rate:  0.43 
-
-
-Edit distance with jaccard >= 0.8 and ngram of size 2
-Average time:  0.36793475391996255
-Hit rate:  0.06 
-
-
-Edit distance on words with at least 1 common ngram of size 2
-Average time:  35.37088790618989
-Hit rate:  0.77 
-
-
-Edit distance with jaccard >= 0.2 and ngram of size 3
-Average time:  0.4110976000498522
-Hit rate:  0.63 
-
-
-Edit distance with jaccard >= 0.5 and ngram of size 3
-Average time:  0.324327281429978
-Hit rate:  0.31 
-
-
-Edit distance with jaccard >= 0.8 and ngram of size 3
-Average time:  0.3220497155699559
-Hit rate:  0.04 
-
-
-Edit distance on words with at least 1 common ngram of size 3
-Average time:  5.6526709148899865
-Hit rate:  0.77 
-
-
-Edit distance with jaccard >= 0.2 and ngram of size 4
-Average time:  0.31569024717007776
-Hit rate:  0.55 
-
-
-Edit distance with jaccard >= 0.5 and ngram of size 4
-Average time:  0.28080455402010557
-Hit rate:  0.14 
-
-
-Edit distance with jaccard >= 0.8 and ngram of size 4
-Average time:  0.2814860883398433
-Hit rate:  0.04 
-
-
-Edit distance on words with at least 1 common ngram of size 4
-Average time:  1.4861631055001454
-Hit rate:  0.71 
-\end{verbatim}
-\newpage
 \section{Analisi e conclusioni}
 La prima cosa che è possibile notare nell'analizzare i dati è la notevole velocità assunta da ricerche di parole più vicine attraverso una soglia del coefficiente di Jaccard.\\
-Questa cosa va però sicuramente a scapito dell'accuratezza dell'algoritmo, infatti con una soglia superiore allo 0.8 è quasi impossibile trovare esattamente la parola che stavamo cercando tra tutte le possibili, quindi è da escludere in un uso reale.\\
-Altra cosa che è sicuramente da escludere è il semplice edit-distance con tutte le parole del dizionario, infatti con un tempo di esecuzione medio di 43 secondi è veramente difficile da usare, sia in applicazioni real time come suggerimenti, sia in campi più lenienti come la correzione di documenti.\\
-Non guadagniamo nemmeno la certezza di trovare la parola esatta con questo metodo, ha sì un tasso di successo tra i più alti, però in parole in cui cambia solamente un carattere è molto difficile trovare con certezza la parola esatta.\\
-Un comportamento simile lo ha anche il confronto con parole che condividono almeno un 2-gram, infatti ci saranno così tante parole che condividono almeno un 2-gram che il guadagno di questo filtro non è abbastanza.
+Questa è guadagnata a scapito dell'accuratezza dell'algoritmo, infatti con una soglia superiore allo 0.8 è quasi impossibile trovare esattamente la parola che stavamo cercando tra tutte le possibili, quindi è da escludere in un uso reale.\\
+Altra cosa che è sicuramente da escludere è il semplice edit-distance con tutte le parole del dizionario, infatti con un tempo di esecuzione medio di 43 secondi è veramente difficile da usare, sia in applicazioni real time come suggerimenti di autocompletamento, sia in campi più lenienti come la correzione di documenti.\\
+Non guadagniamo nemmeno la certezza di trovare la parola esatta con questo metodo, ha sì un tasso di successo tra i più alti, però in parole in cui cambia solamente un carattere è possibile che due o più opzioni siano ugualmente probabili.\\
+Per esempio se la parola "casa" è diventata "casw" l'algoritmo dovrà scegliere tra le parole "casa" ,"caso" ,"case", "casi".\\
+Un comportamento simile lo ha anche il confronto con parole che condividono almeno un 2-gram, infatti ci saranno così tante parole che condividono almeno un 2-gram che il guadagno in termini di tempo di questo filtro non è abbastanza.
 Usando la ricerca tra almeno un 3-gram e 4-gram invece abbiamo un notevole aumento di velocità mantenendo un buon hit-rate, ma comunque non abbastanza per risposte immediate.\\
-Inoltre usare i 4-gram in questo modo ha funzionato bene in questo caso, dato che delle parole scelte casualmente è facile che siano più lunghe del normale, se dovessimo correggere un documento con parole corte infatti avremmo sicuramente un hit rate più basso.\\
+Inoltre usare i 4-gram ha funzionato bene in questo caso, dato che delle parole scelte casualmente è facile che siano più lunghe del normale, se dovessimo correggere un documento con parole corte infatti avremmo sicuramente un hit rate più basso.\\
 Infine rimangono le ricerche su parole con un coefficiente di Jaccard superiore a 0.2 o 0.5.\\
 Aumentando la dimensione degli n-gram usati e la soglia si può vedere come i tempi di esecuzione e gli hit rate scendano.\\
 Il migliore compromesso che siamo in grado di trovare tra accuratezza e velocità sembra essere ricerca tra 3-gram con coefficiente di Jaccard superiore a 0.2, questo infatti ha un tempo medio di esecuzione minore di mezzo secondo e un hit rate del 63\%.\\
