@@ -142,8 +142,9 @@ Hit rate: 0.77
 \\
 \begin{table}[H]
 \centering
-\label{tab:avg_time}
 \caption{Tempo medio di esecuzione(s)}
+\label{tab:avg_time}
+
 \begin{tabular}{|l|l|l|l|l|} 
 \cline{2-5}
 \multicolumn{1}{l|}{} & \begin{tabular}[c]{@{}l@{}}Almeno un\\n-gram\end{tabular} & \begin{tabular}[c]{@{}l@{}}Coefficiente di\\Jaccard $\geq$ 0.2\end{tabular} & \begin{tabular}[c]{@{}l@{}}Coefficiente di\\Jaccard $\geq$ 0.5\end{tabular} & \begin{tabular}[c]{@{}l@{}}Coefficiente di \\Jaccard $\geq$ 0.8\end{tabular}  \\ 
@@ -173,8 +174,8 @@ Hit rate: 0.77
 \end{table}
 \newpage
 \section{Analisi e conclusioni}
-La prima cosa che è possibile notare nell'analizzare i dati è la notevole velocità assunta da ricerche di parole più vicine attraverso una soglia del coefficiente di Jaccard.\\
-Questa è guadagnata a scapito dell'accuratezza dell'algoritmo, infatti con una soglia superiore allo 0.8 è quasi impossibile trovare esattamente la parola che stavamo cercando tra tutte le possibili, quindi è da escludere in un uso reale.\\\\
+La prima cosa che è possibile notare nell'analizzare la tabella \ref{tab:avg_time} è la notevole velocità assunta da ricerche di parole più vicine attraverso una soglia del coefficiente di Jaccard.\\
+Questa è guadagnata a scapito dell'accuratezza dell'algoritmo, infatti con una soglia superiore allo 0.8 è quasi impossibile trovare esattamente la parola che stavamo cercando(tabella \ref{tab:hit_rate}) tra tutte le possibili, quindi è da escludere in un uso reale.\\\\
 Altra cosa che è sicuramente da escludere è il semplice edit-distance con tutte le parole del dizionario, infatti con un tempo di esecuzione medio di 43 secondi è veramente difficile da usare, sia in applicazioni real time come suggerimenti di autocompletamento, sia in campi più lenienti come la correzione di documenti.\\
 Esso è il caso ottimo in fatto di accuratezza dato che vengono controllate tutte le parole, però non abbiamo comunque la certezza di trovare la parola esatta con questo metodo, infatti in parole in cui cambia solamente un carattere è possibile che due o più opzioni siano ugualmente probabili.\\
 Per esempio se la parola "casa" è diventata "casw" l'algoritmo dovrà scegliere tra le parole "casa" ,"caso" ,"case", "casi".\\\\

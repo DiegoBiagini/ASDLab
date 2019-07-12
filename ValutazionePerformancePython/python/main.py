@@ -124,7 +124,6 @@ def plot_and_save(title, results):
     plt.clf()
 
     plt.plot([rec[0] for rec in results], [rec[1] for rec in results])
-    plt.suptitle(title)
     plt.xlabel("Size")
     plt.ylabel("Time(s)")
 
@@ -138,7 +137,6 @@ def plot_and_save_both(title, results):
     plt.plot([rec[0] for rec in results], [rec[1] for rec in results], label="InsertionSort")
     plt.plot([rec[0] for rec in results], [rec[2] for rec in results], label="QuickSort")
 
-    plt.suptitle(title)
     plt.xlabel("Size")
     plt.ylabel("Time(s)")
     plt.legend()

@@ -83,7 +83,6 @@ Dato un grafo diretto pesato(ogni arco ha un peso $w(u,v)$) e connesso è possib
 Questo è un sottoinsieme aciclico $T\subseteq E$ che connette tutti i vertici e che ha peso totale minore, ovvero\\
 $$w(T) = \sum_{(u,v)\in T} w(u,v)$$ \\
 deve essere minimo
-\newpage
 Tutti gli algoritmi per trovare l'MST di un grafo sono costruiti nel modo seguente:
 \begin{algorithm}
 \caption{Generic-MST(G)}
@@ -213,8 +212,9 @@ Esegue la visita BFS sul grafo partendo dal nodo passato e restituisce il valore
 
 \begin{table}[H]
 \centering
-\label{fig:ccs_n}
 \caption{Numero di componenti connesse}
+\label{tab:ccs_n}
+
 \begin{tabular}{|l|l|l|l|l|l|} 
 \cline{2-6}
 \multicolumn{1}{l|}{} & p = 0.2 & p = 0.4 & p = 0.6 & p= 0.8 & p = 1  \\ 
@@ -258,15 +258,22 @@ Esegue la visita BFS sul grafo partendo dal nodo passato e restituisce il valore
     \centering
     \begin{subfigure}[b]{0.45\linewidth} 
         \centering
+        \captionsetup{justification=centering}
+        \caption{Tempo di ricerca delle componenti connesse per p=0.2}
         \includegraphics[width=\textwidth]{cc_time_p=02}
         \label{fig:ccs_time_p=02}
     \end{subfigure}
     \quad
     \begin{subfigure}[b]{0.45\linewidth}
         \centering
+                \captionsetup{justification=centering}
+
+        \caption{Tempo di ricerca delle componenti connesse per p=0.8}
         \includegraphics[width=\textwidth]{cc_time_p=08}
         \label{fig:ccs_time_p=08}
     \end{subfigure}
+    \caption{Alcuni grafici}
+    \label{fig:nccs}
 \end{figure}
 \newpage
 \subsection{MST}
@@ -296,15 +303,19 @@ Esegue la visita BFS sul grafo partendo dal nodo passato e restituisce il valore
     \centering
     \begin{subfigure}[b]{0.45\linewidth} 
         \centering
+        \caption{Tempo di ricerca MST per p=0.2}
         \includegraphics[width=\textwidth]{krusk_time_p=02}
         \label{fig:krusk_time_p=02}
     \end{subfigure}
     \quad
     \begin{subfigure}[b]{0.45\linewidth}
         \centering
+        \caption{Tempo di ricerca MST per p=0.8}
         \includegraphics[width=\textwidth]{krusk_time_p=08}
         \label{fig:krusk_time_p=08}
     \end{subfigure}
+    \caption{Alcuni grafici}
+    \label{fig:mst_time}
 \end{figure}
 
 \textbf{Peso MST}\\
@@ -334,15 +345,19 @@ Esegue la visita BFS sul grafo partendo dal nodo passato e restituisce il valore
     \centering
     \begin{subfigure}[b]{0.45\linewidth} 
         \centering
+        \caption{Peso totale MST per p=0.2}
         \includegraphics[width=\textwidth]{krusk_Weight_p=02}
         \label{fig:krusk_Weight_p=02}
     \end{subfigure}
     \quad
     \begin{subfigure}[b]{0.45\linewidth}
         \centering
+        \caption{Peso totale MST per p=0.8}
         \includegraphics[width=\textwidth]{krusk_Weight_p=08}
         \label{fig:krusk_Weight_p=08}
     \end{subfigure}
+    \caption{Alcuni grafici}
+    \label{fig:mst_weight}
 \end{figure}
 
 \textbf{Altezza MST}\\
@@ -369,26 +384,30 @@ Esegue la visita BFS sul grafo partendo dal nodo passato e restituisce il valore
     \centering
     \begin{subfigure}[b]{0.45\linewidth} 
         \centering
+        \caption{Altezza MST per p=0.2}
         \includegraphics[width=\textwidth]{krusk_height_p=02}
-        \label{fig:quick_casuale}
+        \label{fig:krusk_height}
     \end{subfigure}
     \quad
     \begin{subfigure}[b]{0.45\linewidth}
         \centering
+        \caption{Altezza MST per p=0.8}
         \includegraphics[width=\textwidth]{krusk_height_p=08}
-        \label{fig:quick_best}
+        \label{fig:krusk_height}
     \end{subfigure}
+    \caption{Alcuni grafici}
+    \label{fig:mst_height}
 \end{figure}
 \newpage
 \section{Analisi e conclusioni}
-Dagli esperimenti emerge che molto spesso nel grafo generato si ha una sola componente connessa.\\
+Esaminando la tabella \ref{tab:ccs_n} emerge che molto spesso nel grafo generato si ha una sola componente connessa.\\
 Questo è particolarmente vero quando il numero di vertici del grafo è superiore a 10-20, infatti anche se la probabilità di avere un collegamento tra due nodi è abbastanza bassa in qualche modo sarà generato un cammino che collega qualsiasi coppia di nodi, più o meno lungo.\\
-I tempi di esecuzione di questo algoritmo sono quelli attesi ovvero più che lineare rispetto al numero di archi, cioè alla dimensione e alla probabilità di collegamento dei nodi.\\
+I tempi di esecuzione di questo algoritmo sono quelli attesi(immagine \ref{fig:nccs}) ovvero più che lineare rispetto al numero di archi, cioè alla dimensione e alla probabilità di collegamento dei nodi.\\
 \\
-Un comportamento molto simile lo ha anche il tempo di ricerca dell'MST, anche se le sue costanti sono più alte.\\
-Il peso totale dell'MST è lineare rispetto al numero di nodi,questo ha però un comportamento particolare al variare della probabilità di presenza di archi.\\
+Un comportamento molto simile lo ha anche il tempo di ricerca dell'MST(immagine \ref{fig:mst_time}), anche se le sue costanti sono più alte.\\
+Il peso totale dell'MST è lineare rispetto al numero di nodi(immagine \ref{fig:mst_weight}),questo ha però un comportamento particolare al variare della probabilità di presenza di archi.\\
 Infatti da qualche centinaio di nodi in su e a parità del loro numero, nonostante due grafi siano più o meno popolati di archi(p diversi) il peso dei due MST è molto vicino, se non identico.\\
-Infine è possibile osservare come l'altezza dell'MST inizialmente aumenta con l'aumentare del numero di nodi, questo comportamento però si attenua su grafi di dimensioni maggiori dove l'altezza si inizia a stabilizzare attorno a 10 o 8, a seconda di p.\\
+Infine è possibile osservare come l'altezza dell'MST(immagine \ref{fig:mst_height}) inizialmente aumenta con l'aumentare del numero di nodi, questo comportamento però si attenua su grafi di dimensioni maggiori dove l'altezza si inizia a stabilizzare attorno a 10 o 8, a seconda di p.\\
 Ciò significa che anche aumentando notevolmente il numero di nodi la lunghezza dei cammini  tra qualsiasi coppia di nodi nell'MST resta ragionevole.\\
  
 \end{document}

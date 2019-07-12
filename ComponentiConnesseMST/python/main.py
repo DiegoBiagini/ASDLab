@@ -93,7 +93,6 @@ def main():
 
         # Size-time ccs
         plt.plot([rec[0] for rec in cc_data[p]], [rec[1] for rec in cc_data[p]])
-        plt.suptitle("Tempo di ricerca delle componenti connesse per p=" + str(p))
         plt.xlabel("Size")
         plt.ylabel("Time(s)")
         plt.savefig("../plots/cc_time_p=" + str(p).replace(".", "") + ".png")
@@ -102,7 +101,6 @@ def main():
         plt.clf()
 
         plt.plot([rec[0] for rec in cc_data[p]], [rec[2] for rec in cc_data[p]])
-        plt.suptitle("Numero di componenti connesse per p=" + str(p))
         plt.xlabel("Size")
         plt.ylabel("Componenti connesse")
         plt.savefig("../plots/cc_number_p=" + str(p).replace(".", "") + ".png")
@@ -112,7 +110,6 @@ def main():
 
         plt.plot([rec[0] for rec in krusk_data[p] if rec[1] is not None],
                  [rec[1] for rec in krusk_data[p] if rec[1] is not None])
-        plt.suptitle("Tempo di ricerca MST per p=" + str(p))
         plt.xlabel("Size")
         plt.ylabel("Time(s)")
         plt.savefig("../plots/krusk_time_p=" + str(p).replace(".", "") + ".png")
@@ -122,7 +119,6 @@ def main():
 
         plt.plot([rec[0] for rec in krusk_data[p] if rec[1] is not None],
                  [rec[2] for rec in krusk_data[p] if rec[1] is not None])
-        plt.suptitle("Peso totale MST per p=" + str(p))
         plt.xlabel("Size")
         plt.ylabel("Weight")
         plt.savefig("../plots/krusk_Weight_p=" + str(p).replace(".", "") + ".png")
@@ -132,7 +128,6 @@ def main():
 
         plt.plot([rec[0] for rec in krusk_data[p] if rec[0] < max_tree_height and rec[1] is not None],
                  [rec[3] for rec in krusk_data[p] if rec[0] < max_tree_height and rec[1] is not None])
-        plt.suptitle("Altezza MST per p=" + str(p))
         plt.xlabel("Size")
         plt.ylabel("Height")
         plt.savefig("../plots/krusk_height_p=" + str(p).replace(".", "") + ".png")
