@@ -83,6 +83,11 @@ def main():
                 with open("data/out_mst_" + file_name, "wb") as f:
                     pickle.dump(mst, f)
 
+    with open("data/cc_overall.dat", "wb") as f:
+        pickle.dump(cc_data, f)
+    with open("data/mst_overall.dat", "wb") as f:
+        pickle.dump(krusk_data, f)
+
     for p in probs:
         plt.clf()
 
