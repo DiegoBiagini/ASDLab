@@ -38,7 +38,7 @@ Le operazioni elementari sono le seguenti:\\
 Ognuna di esse ha un certo costo predefinito.\\
 \'E possibile definire una sottostruttura ottima del problema.\\
 Definiamo $X_i=<x_1,x_2,...,x_i>$ e $Y_j=<y_1,y_2,...,y_j>$ sottosequenze di $X$ e $Y$.\\
-Se $C_{i,j}$ è la soluzione ottima di $edit-distance(X_i,Y_j)$ essa contiene soluzioni ottime dei problemi precedenti.\\
+Se $C_{i,j}$ è la soluzione ottima di $edit\mbox{-} distance(X_i,Y_j)$ essa contiene soluzioni ottime dei problemi precedenti.\\
 Quindi possiamo definire $C$ ricorsivamente in questo modo:\\
 \[
 C_{i,j} = min
@@ -69,7 +69,7 @@ I modi di trovare la parola più vicina presi in considerazione sono i seguenti:
 \item eseguire edit distance tra Q e le parole nel dizionario il cui coefficiente di Jaccard con Q è superiore a una certa soglia
 \end{itemize}
 Il dizionario usato contiene 95000 parole della lingua italiana compresi i nomi propri.\\
-I test saranno eseguiti su un insieme di parole sbagliate scelte a caso.\\
+I test saranno eseguiti su un insieme di parole sbagliate scelte a caso, indicativamente 100.\\
 Per ottenerlo saranno scelte un certo numero di parole dal dizionario, dopodichè modificheremo un numero casuale di caratteri in ognuna di esse.\\
 La scelta di quanti caratteri modificare sarà fatta casualmente ma con un criterio:
 \begin{itemize}
@@ -79,6 +79,7 @@ La scelta di quanti caratteri modificare sarà fatta casualmente ma con un crite
 \end{itemize}
 Nel calcolare gli n-gram di una parola saranno aggiunti all'inizio e alla fine di essa degli spazi, in questo modo si può distinguere se due parole iniziano o finiscono nello stesso modo.\\ 
 Eseguiremo poi i tre modi sopracitati sull'insieme delle parole sbagliate, verificando anche se la parola più vicina trovata corrisponde alla parola originale.\\
+Per ogni metodo sarà registrato il tempo medio di esecuzione su tutte le parole e l'hit rate, ovvero la percentuale di parole indovinate.\\
 Gli n-gram che saranno sperimentati saranno i 2-gram, 3-gram, 4-gram dato che valori superiori sono molto predisposti a errori.\\
 Le soglie del coefficiente di Jaccard saranno invece 0.2,0.5 e 0.8.\\\\
 Gli esperimenti saranno condotti su una macchina con sistema operativo Linux Ubuntu 18.04, 6 GB di memoria ram, una cpu Intel Core i5(2.50 GHz / 3.10 GHz, 2 core).
@@ -177,11 +178,11 @@ Hit rate: 0.77
 La prima cosa che è possibile notare nell'analizzare la tabella \ref{tab:avg_time} è la notevole velocità assunta da ricerche di parole più vicine attraverso una soglia del coefficiente di Jaccard.\\
 Questa è guadagnata a scapito dell'accuratezza dell'algoritmo, infatti con una soglia superiore allo 0.8 è quasi impossibile trovare esattamente la parola che stavamo cercando(tabella \ref{tab:hit_rate}) tra tutte le possibili, quindi è da escludere in un uso reale.\\\\
 Altra cosa che è sicuramente da escludere è il semplice edit-distance con tutte le parole del dizionario, infatti con un tempo di esecuzione medio di 43 secondi è veramente difficile da usare, sia in applicazioni real time come suggerimenti di autocompletamento, sia in campi più lenienti come la correzione di documenti.\\
-Esso è il caso ottimo in fatto di accuratezza dato che vengono controllate tutte le parole, però non abbiamo comunque la certezza di trovare la parola esatta con questo metodo, infatti in parole in cui cambia solamente un carattere è possibile che due o più opzioni siano ugualmente probabili.\\
+Esso è il caso ottimo in fatto di accuratezza dato che vengono controllate tutte le parole, però non abbiamo comunque la certezza di trovare la parola esatta con questo metodo, infatti in parole dove cambia solamente un carattere è possibile che due o più opzioni siano ugualmente probabili.\\
 Per esempio se la parola "casa" è diventata "casw" l'algoritmo dovrà scegliere tra le parole "casa" ,"caso" ,"case", "casi".\\\\
 Un comportamento simile lo ha anche il confronto con parole che condividono almeno un 2-gram, infatti ci saranno così tante parole che condividono almeno un 2-gram che il guadagno in termini di tempo di questo filtro non è abbastanza.
 Usando la ricerca tra almeno un 3-gram e 4-gram invece abbiamo un notevole aumento di velocità mantenendo un buon hit-rate, ma comunque non abbastanza per risposte immediate.\\
-Inoltre usare i 4-gram ha funzionato bene in questo caso, dato che delle parole scelte casualmente è facile che siano più lunghe del normale, se dovessimo correggere un documento con parole corte infatti avremmo sicuramente un hit rate più basso.\\
+Inoltre usare i 4-gram ha funzionato bene in questo caso, dato che delle parole scelte casualmente è facile che siano più lunghe del normale, se dovessimo correggere un documento con parole corte avremmo sicuramente un hit rate più basso.\\
 Infine rimangono le ricerche su parole con un coefficiente di Jaccard superiore a 0.2 o 0.5.\\
 Aumentando la dimensione degli n-gram usati e la soglia si può vedere come i tempi di esecuzione e gli hit rate scendano.\\\\
 Il migliore compromesso che siamo in grado di trovare tra accuratezza e velocità sembra essere ricerca tra 3-gram con coefficiente di Jaccard superiore a 0.2, questo infatti ha un tempo medio di esecuzione minore di mezzo secondo e un hit rate del 63\%.\\

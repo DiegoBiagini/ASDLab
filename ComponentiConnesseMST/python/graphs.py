@@ -123,10 +123,6 @@ def order_arcs(graph):
 # Returns a list of arcs which represent the MST of the given graph
 def kruskal_algorithm(graph):
     MST = []
-    # Check if the graph is connected
-    ccs = connected_components(graph)
-    if len(ccs) > 1:
-        return []
 
     # Make sets for each node
     n = graph.shape[0]

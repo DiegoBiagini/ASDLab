@@ -26,7 +26,7 @@ def mistype_word(word, n):
     return "".join(list_string)
 
 
-# Calls mistype_word on every word in the passed list changing a random number of letters(between 1 and len/2 - 1)
+# Calls mistype_word on every word in the passed list changing a random number of letters according to word size
 # Returns a list of tuples, each tuple contains the correct word and the mistyped word
 def mistype_list(words):
     out_list = []

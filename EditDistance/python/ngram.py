@@ -51,7 +51,7 @@ def closest_word_ngram_ed_1gram(word, n, n_grammed_dictionary):
     # Check all words
     for entry in n_grammed_dictionary:
         # If intersection size is at least one
-        if len([value for value in word_ngram if value in entry[1]]):
+        if len([value for value in word_ngram if value in entry[1]]) >= 1:
             distance = edit_distance(word, entry[0])
 
             if distance < mindistance:

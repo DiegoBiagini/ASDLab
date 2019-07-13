@@ -63,7 +63,7 @@ Lo pseudocodice è il seguente:\\
 \end{algorithmic}
 \end{algorithm}
 \\
-La correttezza dell'algoritmo può essere dimostrata con la sua invariante di ciclo:\\ prima della j-esima iterazione il sotto-array $A[1 ... j-1]$ è ordinato e contiene tutti i valori che vi erano presenti inizialmente.\\
+La correttezza dell'algoritmo può essere dimostrata attraverso la sua invariante di ciclo:\\ prima della j-esima iterazione il sotto-array $A[1 ... j-1]$ è ordinato e contiene tutti i valori che vi erano presenti inizialmente.\\
 E' facile verificare che il caso migliore di questo algoritmo si ha quando l'array dato è già ordinato, infatti in questo caso non entreremo mai nel ciclo while interno.\\
 Da questo possiamo dire che nel \textbf{caso migliore} insertion sort è un $\Theta(n)$.\\
 Il \textbf{caso peggiore} si ha invece quando l'array è ordinato in senso decrescente, in questo caso il ciclo while controllerà tutti i valori precedenti a j e il tempo di esecuzione asintotico è $\Theta(n^2)$.\\
@@ -71,7 +71,7 @@ Il caso medio ha un comportamento simile al caso peggiore,infatti mediamente met
 \subsection{Quicksort}
 Quicksort è un algoritmo di ordinamento ricorsivo che segue la filosofia divide-et-impera.\\
 \'E uno degli algoritmi più usati in virtù delle buone prestazioni che offre quando è eseguito su insiemi di elementi senza un particolare ordine preesistente.\\
-Lo pseudocodice dell'algoritmo è il seguente:
+Lo pseudocodice è il seguente:
 
 \begin{algorithm}
 \caption{partition(A,p,r)}
@@ -161,7 +161,7 @@ test_sorting(max_time, sorting_f, random_array_f, save_to_file, filename)
 \end{verbatim}
 Si occupa di testare un algoritmo di sorting.\\
 Prende come parametri il tempo massimo di esecuzione, la funzione che implementa l'algoritmo da testare, la funzione che genera l'array del tipo voluto. Consente inoltre di salvare i risultati su file se save\_to\_file è impostato a True.\\
-Restituisce una lista di tuple, ogni tupla è composta dalla dimensione testata e dal tempo di esecuzione per la data dimensione.
+Restituisce una lista di tuple, ogni tupla è composta dalla dimensione testata e dal tempo di esecuzione per la data dimensione.\\\\
 \begin{verbatim}
 test_both(max_time,save_to_file)
 \end{verbatim}
@@ -307,7 +307,7 @@ Size  & Insertion sort & Quick sort  \\
 
 \section{Analisi e conclusioni}
 Analizzando i risultati degli esperimenti è possibile verificare ciò che ci dice la teoria.\\\\
-Riguardo insertion sort, grazie ai grafici tracciati, possiamo notare come il caso medio[\ref{fig:insertion_casuale}] e peggiore[\ref{fig:insertion_worst}] si avvicinano a delle parabole, mentre il caso migliore[\ref{fig:insertion_best}] è una retta quasi perfetta che riesce ad "ordinare" insiemi di dati veramente velocemente.\\
+Riguardo insertion sort, grazie ai grafici tracciati, possiamo notare come il caso medio[\ref{fig:insertion_casuale}] e peggiore [\ref{fig:insertion_worst}] si avvicinano a delle parabole, mentre il caso migliore[\ref{fig:insertion_best}] è una retta quasi perfetta che riesce ad "ordinare" insiemi di dati veramente velocemente.\\
 Nonostante questo,il caso migliore è un caso così particolare(array già ordinato) che non capita molto frequentemente nei problemi di ordinamento classici, non possiamo quindi considerarlo veramente un punto forte dell'algoritmo in applicazioni generiche.\\\\
 Dai grafici di quicksort possiamo invece vedere come il caso peggiore[\ref{fig:quick_worst}] sia una parabola, comparabile col caso medio e peggiore di insertion sort, mentre il caso medio[\ref{fig:quick_casuale}] e migliore[\ref{fig:quick_best}] si avvicinano a una retta, nonostante la teoria ci dica che il costo asintotico è $\Theta(nlog(n))$.\\
 Quest'ultima cosa ci mostra graficamente come le costanti di quicksort omesse nella notazione asintotica sono piccole, quasi da far apparire il tempo di esecuzione come lineare.\\

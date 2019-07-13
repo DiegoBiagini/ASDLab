@@ -50,7 +50,6 @@ def main():
     print("Simple edit distance\n Average time: ", sum(times) / n_words)
     print("Hit rate: ", n_hit / n_words, "\n\n")
 
-
     for n_gram in n_grams_lenght:
 
         n_gram_dictionary = dictionary_ngram(dictionary_spaces, n_gram)

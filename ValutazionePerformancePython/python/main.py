@@ -54,8 +54,8 @@ def next_size(current_size):
 
 # Standard test function, takes the max time the test is allowed to run, the sorting algorithm that will be used and
 # the function that will generate the array of values
-# puts into the list passed as a parameters the tuples: (size, time)
-# If save_to_file is true saves the various array to file
+# Returns a list of tuples: (size, time)
+# If save_to_file is true saves the various arrays to file
 def test_sorting(max_time, sorting_f, random_array_f, save_to_file, filename):
     results = []
     current_size = 1

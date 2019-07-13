@@ -34,7 +34,7 @@ Un grafo può essere individuato attraverso due insiemi:
 \item l'insieme degli archi $E$ ,ogni arco è indicato da una coppia di vertici
 \end{itemize}
 Un grafo si dice \textbf{non diretto} se $E$ è composto da coppie di vertici ordinate.\\
-Viene definito \textbf{cammino} di un grafo dal vertice $u$ a $u'$ una sequenza di vertici $<v_0, ... , v_k>$ tale che $v_0 = u,v_k=u'$ e $(v_i-1, v_i)$ è un arco presente in $E$ per $i = 2,..., k-1$.\\
+Viene definito \textbf{cammino} di un grafo dal vertice $u$ a $u'$ una sequenza di vertici $<v_0, ... , v_k>$ tale che $v_0 = u,v_k=u'$ e $(v_{i-1}, v_i)$ è un arco presente in $E$ per $i = 2,..., k-1$.\\
 Se $v_0 = v_k$ e il cammino è formato da almeno un arco invece siamo in presenza di un \textbf{ciclo}
 \\\\
 \'E possibile memorizzare i grafi in diversi modi, due opzioni possibili sono le seguenti:
@@ -82,7 +82,7 @@ Per trovare le componenti connesse in modo semplice si usa il seguente algoritmo
 Dato un grafo diretto pesato(ogni arco ha un peso $w(u,v)$) e connesso è possibile trovare un albero minimo di connessione.\\
 Questo è un sottoinsieme aciclico $T\subseteq E$ che connette tutti i vertici e che ha peso totale minore, ovvero\\
 $$w(T) = \sum_{(u,v)\in T} w(u,v)$$ \\
-deve essere minimo
+deve essere minimo.\\
 Tutti gli algoritmi per trovare l'MST di un grafo sono costruiti nel modo seguente:
 \begin{algorithm}
 \caption{Generic-MST(G)}
@@ -125,7 +125,7 @@ I grafi presi in considerazione saranno grafi pesati generati casualmente.\\
 La dimensione dei grafi generati sarà sempre crescente ed inoltre saranno testati vari modi di collegare i loro nodi.\\
 In particolare per ogni dimensione del grafo saranno generati 5 diversi grafi, in ognuno di essi la probabilità che un nodo sia collegato ad un altro(p) sarà diversa.\\
 La crescita del numero di nodi sarà esponenziale, ad ogni ciclo sarà raddoppiata fino ad arrivare ad un massimo di $2^{12}$.\\
-Per ogni grafo generato prima di tutto verranno ricercate le componenti connesse e sarà registrato il tempo di esecuzione.\\
+Per ogni grafo generato prima di tutto verranno ricercate le componenti connesse e sarà registrato il loro numero e il tempo di esecuzione.\\
 Dopodichè se è stata trovata esattamente una componente connessa è possibile eseguire la ricerca dell'MST con l'algoritmo di Kruskal.\\
 Per questo sarà registrato il tempo di esecuzione e il peso totale dell'MST.\\
 Inoltre sotto una certa dimensione(numero nodi <= 2000 per motivi di tempo di esecuzione) sarà calcolata l'altezza dell'MST.\\
